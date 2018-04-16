@@ -23,10 +23,10 @@ my @toTest =(
     	"\N{HEBREW POINT DAGESH OR MAPIQ}" ,
 
     "--",
-	# not a taam-ACCENT But belongs on the bottom.
-	"\N{HEBREW POINT METEG}" ,
 	"\N{HEBREW PUNCTUATION MAQAF}" ,
 	"\N{HEBREW PUNCTUATION SOF PASUQ}" ,
+	# not a taam-ACCENT But belongs on the bottom.
+	"\N{HEBREW POINT METEG}" ,
 
     "--",
 
@@ -57,7 +57,6 @@ my @toTest =(
 	"\N{HEBREW ACCENT GERESH MUQDAM}" ,
 	"\N{HEBREW ACCENT GERSHAYIM}" ,
 	"\N{HEBREW ACCENT REVIA}" ,
-	"\N{HEBREW ACCENT QARNEY PARA}" ,
 
 	"\N{HEBREW ACCENT PAZER}" ,
 	"\N{HEBREW ACCENT DARGA}" ,
@@ -65,6 +64,7 @@ my @toTest =(
 
 	"\N{HEBREW ACCENT TELISHA GEDOLA}" ,
 	"\N{HEBREW ACCENT TELISHA QETANA}" ,
+	"\N{HEBREW ACCENT QARNEY PARA}" ,
 
     "--",
 	
