@@ -48,8 +48,10 @@ sub heb2BrailleUnicode {
     }
     
 
-    my $taamAbove = "\N{BRAILLE PATTERN DOTS-4}";
-    my $taamBelow = "\N{BRAILLE PATTERN DOTS-6}";
+    # Inspired by UEB 15.3 "Tone". Arguably the introduction ought to be two symbols instead of one in order not to conflict with UEB15.3
+    # http://www.iceb.org/Rules%20of%20Unified%20English%20Braille%202013%20(linked).pdf
+    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    my $taamBelow = "\N{BRAILLE PATTERN DOTS-56}";
     
     my %map =(
 	"א" => "\N{BRAILLE PATTERN DOTS-1}",
