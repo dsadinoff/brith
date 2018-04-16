@@ -2,20 +2,16 @@ package H2BEncoder;
 
 use utf8;
 use common::sense;
+use Moo;
 use Method::Signatures;
-require Exporter;
-our @ISA= qw(Exporter);
 
-our @EXPORT_OK = qw(braille2BrailleAscii heb2BrailleUnicode); 
-
-func braille2BrailleAscii($input){
+method brUni2BrAscii($input){
     $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}{A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
     return $input;
 }
 
-func heb2BrailleUnicode($string, :$highlightTaamim) {
-
-    my %options = @_;
+# convert hebrew to unicode Braille
+method heb2BrUni($string, :$highlightTaamim) {
     my @precomposed = (
 	{ pat => qr"\N{HEBREW LETTER BET}\N{HEBREW POINT DAGESH OR MAPIQ}" , repl => "\N{BRAILLE PATTERN DOTS-12}"},
 
@@ -37,7 +33,7 @@ func heb2BrailleUnicode($string, :$highlightTaamim) {
 
 	# unification to regular punctuation
 	{ pat => qr"\N{HEBREW PUNCTUATION MAQAF}",repl => "-"},
-	{ pat => qr"\N{HEBREW PUNCTUATION SOF PASUQ}",repl => ":"},
+	{ pat => qr"\N{HEBREW PUNCTUATION SOF PASUQ}",repl => "."},
 	
 	);
 
@@ -52,6 +48,9 @@ func heb2BrailleUnicode($string, :$highlightTaamim) {
     # http://www.iceb.org/Rules%20of%20Unified%20English%20Braille%202013%20(linked).pdf
     my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
     my $taamBelow = "\N{BRAILLE PATTERN DOTS-56}";
+    my $colonBraille= "\N{BRAILLE PATTERN DOTS-25}"; # can't use a colon, it's the same symbols as hataf-patach
+    my $periodBraille= "\N{BRAILLE PATTERN DOTS-256}";
+    my $hyphenMinusBraille= "\N{BRAILLE PATTERN DOTS-36}";
     
     my %map =(
 	"א" => "\N{BRAILLE PATTERN DOTS-1}",
@@ -97,7 +96,8 @@ func heb2BrailleUnicode($string, :$highlightTaamim) {
 	"ת" => "\N{BRAILLE PATTERN DOTS-1456}",
 
 
-	"-" => "\N{BRAILLE PATTERN DOTS-36}",
+	"-" => $hyphenMinusBraille,
+	"." => $periodBraille,
 
 	"\N{HEBREW POINT HIRIQ}" => "\N{BRAILLE PATTERN DOTS-24}",
 	"\N{HEBREW POINT TSERE}" => "\N{BRAILLE PATTERN DOTS-34}",
@@ -168,7 +168,7 @@ func heb2BrailleUnicode($string, :$highlightTaamim) {
 	"\N{HEBREW ACCENT DEHI}" => "\N{BRAILLE PATTERN DOTS-12345678}",
 	"\N{HEBREW ACCENT ZARQA}" => "\N{BRAILLE PATTERN DOTS-12345678}", # actually a Tzinor
 	
-
+	" " => "\N{BRAILLE PATTERN BLANK}"
 
 	);
     my @chars = split //, $string;
@@ -177,7 +177,7 @@ func heb2BrailleUnicode($string, :$highlightTaamim) {
     if( $highlightTaamim){
 	my $brailleHTML = $brailleUnicode;
 	$brailleHTML =~ s{(($taamAbove|$taamBelow).)}{<span class="taam">$1</span>}g;
-	$brailleHTML =~ s{[-:]}{<span class="punct">$1</span>}g;
+	$brailleHTML =~ s{([$periodBraille$hyphenMinusBraille])}{<span class="punct">$1</span>}g;
 	return $brailleHTML;
     }
     else{

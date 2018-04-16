@@ -14,7 +14,7 @@ use LWP::Simple;
 use Data::Dumper;
 use Getopt::Long;
 use lib qw(.);
-use H2BEncoder qw(braille2BrailleAscii heb2BrailleUnicode); 
+use H2BEncoder; # qw(braille2BrailleAscii heb2BrailleUnicode); 
 use common::sense;
 
 my $printHebrew =0;
@@ -29,6 +29,7 @@ GetOptions("print-hebrew|w" => \$printHebrew,
 	   "stdin|s" => \$readStdin,
 	   );
 
+my $enc = H2BEncoder->new();
 
 if( $readStdin){
     while(<>){
@@ -43,10 +44,24 @@ else{
     my $url = "https://www.sefaria.org.il/api/texts/${spec}?commentary=0&context=1&pad=0&wrapLinks=1";
     my $json = qx(curl -s $url) or die "failed to get $url";
     my $obj = decode_json($json);
-    
-    my @lines = @{$obj->{he}};
+    my @lines;
+    if( $obj->{isSpanning}){
+	@lines = map {@{$_}} @{$obj->{he}};
+    }
+    else{
+	@lines = @{$obj->{he}};
+    }
+
+    my $totalPassages =  1+ $obj->{toSections}[1]- $obj->{sections}[1];
+    my $count =0; 
     for my $line(@lines){
 	emitLine($line);
+	if( ! $obj->{isSpanning}){
+	    $count++;
+	    if( $count >= $totalPassages){
+		last;
+	    }
+	}
     }
 }
 
@@ -56,13 +71,13 @@ sub emitLine{
 
     say $line if $printHebrew;
 
-    my $p1Pure = heb2BrailleUnicode($line);
+    my $p1Pure = $enc->heb2BrUni($line);
 
     
-    my $p1 = heb2BrailleUnicode($line, highlightTaamim => $highlightTaamim);
+    my $p1 = $enc->heb2BrUni($line, highlightTaamim => $highlightTaamim);
     say $p1 if $printBrailleUnicode;
     
-    my $p2 = braille2BrailleAscii($p1Pure);
+    my $p2 = $enc->brUni2BrAscii($p1Pure);
     say $p2 if $printBrailleAscii;
 
     

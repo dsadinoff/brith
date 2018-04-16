@@ -13,12 +13,12 @@ use LWP::Simple;
 use Data::Dumper;
 use Getopt::Long;
 use lib qw(.);
-use H2BEncoder qw(braille2BrailleAscii heb2BrailleUnicode); 
+use H2BEncoder;# qw(braille2BrailleAscii heb2BrailleUnicode); 
 use common::sense;
 
 use charnames ();
 
-
+my $enc = H2BEncoder->new();
 my @toTest =(
     	"\N{HEBREW POINT DAGESH OR MAPIQ}" ,
 
@@ -98,7 +98,7 @@ EOF
 	my $name = charnames::viacode(ord($char));
 
 	my $text = "\N{HEBREW LETTER ALEF}$char";
-	my $uni  = heb2BrailleUnicode($text,highlightTaamim => 1);
+	my $uni  = $enc->heb2BrUni($text,highlightTaamim => 1);
 	say "<tr><td>$name<td>$text<td>$uni</td></tr>";
 }
 say "</table>";
