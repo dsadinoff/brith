@@ -22,6 +22,13 @@ my $enc = H2BEncoder->new();
 my @toTest =(
     	"\N{HEBREW POINT DAGESH OR MAPIQ}" ,
 
+    "--",
+	# not a taam-ACCENT But belongs on the bottom.
+	"\N{HEBREW POINT METEG}" ,
+	"\N{HEBREW PUNCTUATION MAQAF}" ,
+	"\N{HEBREW PUNCTUATION SOF PASUQ}" ,
+
+    "--",
 
 	# below
 	#prefixed with "caps" dots-6
@@ -35,9 +42,6 @@ my @toTest =(
 	"\N{HEBREW ACCENT YETIV}" ,
 	"\N{HEBREW ACCENT MUNAH}" ,
 	"\N{HEBREW ACCENT MAHAPAKH}" ,
-
-	# not a taam-ACCENT But belongs on the bottom.
-	"\N{HEBREW POINT METEG}" ,
 
     "--",
 
