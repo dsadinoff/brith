@@ -85,7 +85,7 @@ say <<EOF;
 
     <table>
     
-	<th>taam<th>Braille
+	<th>Unicode Name<th>Hebrew<th>Braille
 
 EOF
 
