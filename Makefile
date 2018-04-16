@@ -14,7 +14,7 @@ out4.html:
 	mv $@.tmp $@
 
 
-testSheet.html:
+testSheet.html: tester.pl
 	./tester.pl > $@.tmp;
 	mv $@.tmp $@
 

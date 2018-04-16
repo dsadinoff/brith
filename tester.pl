@@ -96,8 +96,10 @@ EOF
 	    next;
 	}
 	my $name = charnames::viacode(ord($char));
-	my $uni  = heb2BrailleUnicode($char);
-	say "<tr><td>$name<td>$uni</td></tr>";
+
+	my $text = "\N{HEBREW LETTER ALEF}$char";
+	my $uni  = heb2BrailleUnicode($text);
+	say "<tr><td>$name<td>$text<td>$uni</td></tr>";
 }
 say "</table>";
 
