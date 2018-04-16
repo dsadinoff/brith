@@ -2,20 +2,20 @@ package H2BEncoder;
 
 use utf8;
 use common::sense;
-
+use Method::Signatures;
 require Exporter;
 our @ISA= qw(Exporter);
 
 our @EXPORT_OK = qw(braille2BrailleAscii heb2BrailleUnicode); 
 
-sub braille2BrailleAscii{
-    my $input = shift;
+func braille2BrailleAscii($input){
     $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}{A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
     return $input;
 }
 
-sub heb2BrailleUnicode {
-    my $string = shift;
+func heb2BrailleUnicode($string, :$highlightTaamim) {
+
+    my %options = @_;
     my @precomposed = (
 	{ pat => qr"\N{HEBREW LETTER BET}\N{HEBREW POINT DAGESH OR MAPIQ}" , repl => "\N{BRAILLE PATTERN DOTS-12}"},
 
@@ -173,7 +173,16 @@ sub heb2BrailleUnicode {
 	);
     my @chars = split //, $string;
     # say Dumper(\@chars);
-    return join "", map { $map{$_} || $_ } @chars;
+    my $brailleUnicode =  join "", map { $map{$_} || $_ } @chars;
+    if( $highlightTaamim){
+	my $brailleHTML = $brailleUnicode;
+	$brailleHTML =~ s{(($taamAbove|$taamBelow).)}{<span class="taam">$1</span>}g;
+	$brailleHTML =~ s{[-:]}{<span class="punct">$1</span>}g;
+	return $brailleHTML;
+    }
+    else{
+	return $brailleUnicode;
+    }
 }
 
 1;

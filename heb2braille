@@ -20,10 +20,12 @@ use common::sense;
 my $printHebrew =0;
 my $printBrailleUnicode =0;
 my $printBrailleAscii =0;
+my $highlightTaamim =0;
 my $readStdin =0;
 GetOptions("print-hebrew|w" => \$printHebrew,
 	   "print-braille-unicode|u" => \$printBrailleUnicode,
 	   "print-braille-ascii|a" => \$printBrailleAscii,
+	   "highlight-taamim|t" => \$highlightTaamim,
 	   "stdin|s" => \$readStdin,
 	   );
 
@@ -53,10 +55,14 @@ sub emitLine{
     my $line = shift;
 
     say $line if $printHebrew;
-    my $p1 = heb2BrailleUnicode($line);
+
+    my $p1Pure = heb2BrailleUnicode($line);
+
+    
+    my $p1 = heb2BrailleUnicode($line, highlightTaamim => $highlightTaamim);
     say $p1 if $printBrailleUnicode;
     
-    my $p2 = braille2BrailleAscii($p1);
+    my $p2 = braille2BrailleAscii($p1Pure);
     say $p2 if $printBrailleAscii;
 
     

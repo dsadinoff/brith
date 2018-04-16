@@ -1,8 +1,8 @@
 out4.html:
 	cat pre1.html  > $@.tmp
-	./heb2braille -w >> $@.tmp
+	./heb2braille -w  >> $@.tmp
 	echo "<td>" >> $@.tmp
-	./heb2braille -u  >> $@.tmp
+	./heb2braille -u --highlight-taamim >> $@.tmp
 
 	(echo "<br><pre>" && ./heb2braille -a | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
 
