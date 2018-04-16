@@ -93,6 +93,7 @@ EOF
     for my $char (@toTest){
 	if( $char eq'--'){
 	    say qq(<tr><td colspan=2"><hr>);
+	    next;
 	}
 	my $name = charnames::viacode(ord($char));
 	my $uni  = heb2BrailleUnicode($char);

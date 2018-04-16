@@ -48,8 +48,8 @@ sub heb2BrailleUnicode {
     }
     
 
-    my $taamBelow = "\N{}";
-    my $taamAbove = "\N{}";
+    my $taamAbove = "\N{BRAILLE PATTERN DOTS-4}";
+    my $taamBelow = "\N{BRAILLE PATTERN DOTS-6}";
     
     my %map =(
 	"א" => "\N{BRAILLE PATTERN DOTS-1}",

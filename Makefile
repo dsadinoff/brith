@@ -13,9 +13,15 @@ out4.html:
 	echo "</pre><td><pre>" >> $@.tmp
 	mv $@.tmp $@
 
-push: out4.html
-	cp $< docs
+
+testSheet.html:
+	./tester.pl > $@.tmp;
+	mv $@.tmp $@
+
+
+push: out4.html  testSheet.html
+	cp testSheet.html out4.html docs
 
 
 clean:
-	-rm  out4.html
+	-rm  out4.html testSheet.html

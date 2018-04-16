@@ -13,28 +13,42 @@ use JSON;
 use LWP::Simple;
 use Data::Dumper;
 use Getopt::Long;
+use lib qw(.);
+use H2BEncoder qw(braille2BrailleAscii heb2BrailleUnicode); 
 use common::sense;
 
 my $printHebrew =0;
 my $printBrailleUnicode =0;
 my $printBrailleAscii =0;
+my $readStdin =0;
 GetOptions("print-hebrew|w" => \$printHebrew,
 	   "print-braille-unicode|u" => \$printBrailleUnicode,
 	   "print-braille-ascii|a" => \$printBrailleAscii,
+	   "stdin|s" => \$readStdin,
 	   );
 
-#https://www.sefaria.org.il/api/texts/Exodus.10.1-11?commentary=0&context=1&pad=0&wrapLinks=1
-my $spec = $ARGV[0] || 'Exodus.10.1-11' ;
-#grab data from sefaria;
-my $url = "https://www.sefaria.org.il/api/texts/${spec}?commentary=0&context=1&pad=0&wrapLinks=1";
-my $json = qx(curl -s $url) or die "failed to get $url";
-my $obj = decode_json($json);
 
-my @lines = @{$obj->{he}};
-for my $line(@lines){
-    emitLine($line);
+if( $readStdin){
+    while(<>){
+	chomp;
+	emitLine($_);
+    }
+}
+else{
+    #https://www.sefaria.org.il/api/texts/Exodus.10.1-11?commentary=0&context=1&pad=0&wrapLinks=1
+    my $spec = $ARGV[0] || 'Exodus.10.1-11' ;
+    #grab data from sefaria;
+    my $url = "https://www.sefaria.org.il/api/texts/${spec}?commentary=0&context=1&pad=0&wrapLinks=1";
+    my $json = qx(curl -s $url) or die "failed to get $url";
+    my $obj = decode_json($json);
+    
+    my @lines = @{$obj->{he}};
+    for my $line(@lines){
+	emitLine($line);
+    }
 }
 
+exit 0;
 sub emitLine{    
     my $line = shift;
 
@@ -42,162 +56,8 @@ sub emitLine{
     my $p1 = heb2BrailleUnicode($line);
     say $p1 if $printBrailleUnicode;
     
-    my $p2 = brl2BrlAscii($p1);
+    my $p2 = braille2BrailleAscii($p1);
     say $p2 if $printBrailleAscii;
 
     
-}
-exit 0;
-sub brl2BrlAscii{
-    my $input = shift;
-    $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}{A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
-    return $input;
-}
-
-sub heb2BrailleUnicode {
-    my $string = shift;
-    my @precomposed = (
-	{ pat => qr"\N{HEBREW LETTER BET}\N{HEBREW POINT DAGESH OR MAPIQ}" , repl => "\N{BRAILLE PATTERN DOTS-12}"},
-
-	{ pat => qr"\N{HEBREW LETTER VAV}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, # שורוק
-	{ pat => qr"\N{HEBREW LETTER VAV WITH DAGESH}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, #
-
-	{ pat => qr"\N{HEBREW LETTER KAF}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
-	{ pat => qr"\N{HEBREW LETTER FINAL KAF}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
-
-	{ pat => qr"\N{HEBREW LETTER PE}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
-	{ pat => qr"\N{HEBREW LETTER FINAL PE}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
-
-	{ pat => qr"\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}",repl => "\N{BRAILLE PATTERN DOTS-146}"},
-	{ pat => qr"\N{HEBREW LETTER SHIN}\N{HEBREW POINT SIN DOT}",repl => "\N{BRAILLE PATTERN DOTS-156}"},
-
-
-	{ pat => qr"\N{HEBREW LETTER TAV}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-1256}"},
-
-
-	# unification to regular punctuation
-	{ pat => qr"\N{HEBREW PUNCTUATION MAQAF}",repl => "-"},
-	{ pat => qr"\N{HEBREW PUNCTUATION SOF PASUQ}",repl => ":"},
-	
-	);
-
-    for  my $struct (@precomposed){
-	my $pat = $struct->{pat};
-	my $repl = $struct->{repl};
-	$string =~ s{$pat}{$repl}g;
-    }
-    
-    
-    my %map =(
-	"א" => "\N{BRAILLE PATTERN DOTS-1}",
-	"ב" => "\N{BRAILLE PATTERN DOTS-1236}",
-	"ג" => "\N{BRAILLE PATTERN DOTS-1245}",
-	"ד" => "\N{BRAILLE PATTERN DOTS-145}",
-	"ה" => "\N{BRAILLE PATTERN DOTS-125}",
-
-	"ו" => "\N{BRAILLE PATTERN DOTS-2456}",
-
-	
-	"ז" => "\N{BRAILLE PATTERN DOTS-1356}",
-	"ח" => "\N{BRAILLE PATTERN DOTS-1346}",
-	"ט" => "\N{BRAILLE PATTERN DOTS-2345}",
-	"י" => "\N{BRAILLE PATTERN DOTS-245}",
-	"כ" => "\N{BRAILLE PATTERN DOTS-16}",
-	"ך" => "\N{BRAILLE PATTERN DOTS-16}",
-
-	"ל" => "\N{BRAILLE PATTERN DOTS-123}",
-	"מ" => "\N{BRAILLE PATTERN DOTS-134}",
-	"ם" => "\N{BRAILLE PATTERN DOTS-134}",
-
-
-	"נ" => "\N{BRAILLE PATTERN DOTS-1345}",
-	"ן" => "\N{BRAILLE PATTERN DOTS-1345}",
-
-	"ס" => "\N{BRAILLE PATTERN DOTS-234}",
-	"ע" => "\N{BRAILLE PATTERN DOTS-1246}",
-
-	"פ" => "\N{BRAILLE PATTERN DOTS-124}",
-	"ף" => "\N{BRAILLE PATTERN DOTS-124}",
-	
-	"צ" => "\N{BRAILLE PATTERN DOTS-2346}",
-	"ץ" => "\N{BRAILLE PATTERN DOTS-2346}",
-	
-	"ק" => "\N{BRAILLE PATTERN DOTS-12345}",
-	"ר" => "\N{BRAILLE PATTERN DOTS-1235}",
-
-	"ש" => "\N{BRAILLE PATTERN DOTS-146}",
-	"שׁ" => "\N{BRAILLE PATTERN DOTS-146}",
-	"שׂ" => "\N{BRAILLE PATTERN DOTS-156}",
-
-	"ת" => "\N{BRAILLE PATTERN DOTS-1456}",
-
-
-	"-" => "\N{BRAILLE PATTERN DOTS-36}",
-
-	"\N{HEBREW POINT HIRIQ}" => "\N{BRAILLE PATTERN DOTS-24}",
-	"\N{HEBREW POINT TSERE}" => "\N{BRAILLE PATTERN DOTS-34}",
-	"\N{HEBREW POINT SEGOL}" => "\N{BRAILLE PATTERN DOTS-15}",
-	"\N{HEBREW POINT PATAH}" => "\N{BRAILLE PATTERN DOTS-14}",
-	"\N{HEBREW POINT QAMATS}" => "\N{BRAILLE PATTERN DOTS-126}",
-	"\N{HEBREW POINT HOLAM}" => "\N{BRAILLE PATTERN DOTS-246}",
-	"\N{HEBREW POINT QUBUTS}" => "\N{BRAILLE PATTERN DOTS-136}",
-	
-
-	"\N{HEBREW POINT SHEVA}" => "\N{BRAILLE PATTERN DOTS-6}",
-	"\N{HEBREW POINT HATAF SEGOL}" => "\N{BRAILLE PATTERN DOTS-26}",
-	"\N{HEBREW POINT HATAF PATAH}" => "\N{BRAILLE PATTERN DOTS-25}",
-	"\N{HEBREW POINT HATAF QAMATS}" => "\N{BRAILLE PATTERN DOTS-345}",
-
-
-	# Need to encode: 32 symbols.
-
-	# 
-	"\N{HEBREW POINT DAGESH OR MAPIQ}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW POINT METEG}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-
-
-	# below
-	#prefixed with "caps" dots-6
-	"\N{HEBREW ACCENT ETNAHTA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT TIPEHA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT TEVIR}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT YETIV}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT MUNAH}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT MAHAPAKH}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT MERKHA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT MERKHA KEFULA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT YERAH BEN YOMO}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ATNAH HAFUKH}" => "\N{BRAILLE PATTERN DOTS-12345678}", # aka Yerech ben yomo
-
-	# above
-	#prefixed with "up-top" dots-3
-	"\N{HEBREW ACCENT SEGOL}" => "\N{BRAILLE PATTERN DOTS-12345678}", # cf HEBREW POINT SEGOL
-	"\N{HEBREW ACCENT SHALSHELET}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ZAQEF QATAN}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ZAQEF GADOL}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ZINOR}" => "\N{BRAILLE PATTERN DOTS-12345678}", # misnamed zarqa.  
-	"\N{HEBREW ACCENT PASHTA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT GERESH}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT GERESH MUQDAM}" => "\N{BRAILLE PATTERN DOTS-12345678}", # unify with geresh?
-	"\N{HEBREW ACCENT REVIA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT GERSHAYIM}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT QARNEY PARA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT TELISHA GEDOLA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT PAZER}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT DARGA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT QADMA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT TELISHA QETANA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	
-	# only in אמ"ת.  For completeness
-	"\N{HEBREW ACCENT OLE}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ILUY}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT DEHI}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ZARQA}" => "\N{BRAILLE PATTERN DOTS-12345678}", # actually a zinor
-	
-
-
-	);
-    my @chars = split //, $string;
-    # say Dumper(\@chars);
-    return join "", map { $map{$_} || $_ } @chars;
 }
