@@ -1,5 +1,5 @@
-#PASSAGE=Exodus.10.1-11
-PASSAGE=Exodus.10.1-2
+PASSAGE=Exodus.10.1-11
+# PASSAGE=Exodus.10.1-2
 S2B=./sefaria2braille
 
 out4.html:
