@@ -5,6 +5,14 @@ use common::sense;
 use Moo;
 use Method::Signatures;
 
+use namespace::clean;
+
+has mode => (
+    is => 'ro',
+    default => 'CO',
+    );
+
+
 method brUni2BrAscii($input){
     $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}{A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
     return $input;
@@ -44,15 +52,8 @@ method heb2BrUni($string, :$highlightTaamim) {
     }
     
 
-    # Inspired by UEB 15.3 "Tone". Arguably the introduction ought to be two symbols instead of one in order not to conflict with UEB15.3
-    # http://www.iceb.org/Rules%20of%20Unified%20English%20Braille%202013%20(linked).pdf
-    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
-    my $taamBelow = "\N{BRAILLE PATTERN DOTS-56}";
-    my $colonBraille= "\N{BRAILLE PATTERN DOTS-25}"; # can't use a colon, it's the same symbols as hataf-patach
-    my $periodBraille= "\N{BRAILLE PATTERN DOTS-256}";
-    my $hyphenMinusBraille= "\N{BRAILLE PATTERN DOTS-36}";
     
-    my %map =(
+    my %basicHebrew =(
 	"א" => "\N{BRAILLE PATTERN DOTS-1}",
 	"ב" => "\N{BRAILLE PATTERN DOTS-1236}",
 	"ג" => "\N{BRAILLE PATTERN DOTS-1245}",
@@ -96,9 +97,6 @@ method heb2BrUni($string, :$highlightTaamim) {
 	"ת" => "\N{BRAILLE PATTERN DOTS-1456}",
 
 
-	"-" => $hyphenMinusBraille,
-	"." => $periodBraille,
-
 	"\N{HEBREW POINT HIRIQ}" => "\N{BRAILLE PATTERN DOTS-24}",
 	"\N{HEBREW POINT TSERE}" => "\N{BRAILLE PATTERN DOTS-34}",
 	"\N{HEBREW POINT SEGOL}" => "\N{BRAILLE PATTERN DOTS-15}",
@@ -113,15 +111,33 @@ method heb2BrUni($string, :$highlightTaamim) {
 	"\N{HEBREW POINT HATAF PATAH}" => "\N{BRAILLE PATTERN DOTS-25}",
 	"\N{HEBREW POINT HATAF QAMATS}" => "\N{BRAILLE PATTERN DOTS-345}",
 
+	);
+    
 
+    # Inspired by UEB 15.3 "Tone". Arguably the introduction ought to be two symbols instead of one in order not to conflict with UEB15.3
+    # http://www.iceb.org/Rules%20of%20Unified%20English%20Braille%202013%20(linked).pdf
+    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    my $taamBelow = "\N{BRAILLE PATTERN DOTS-56}";
+    my $colonBraille= "\N{BRAILLE PATTERN DOTS-25}"; # can't use a colon, it's the same symbols as hataf-patach
+    my $periodBraille= "\N{BRAILLE PATTERN DOTS-256}";
+    my $hyphenMinusBraille= "\N{BRAILLE PATTERN DOTS-36}";
 
-
+    # Clarity - Orthographic
+    #this encoding uses an escape character .
+    my %CO = (
+	"-" => $hyphenMinusBraille,
+	"." => $periodBraille,
+	
+	
 	# NOVEL ENCODINGS HERE
 
 	# Need to encode: 32 symbols.
 
-	# 
+	# This is a standard mentioned in the WP page
 	"\N{HEBREW POINT DAGESH OR MAPIQ}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1245}",
+
+	# from the english for vertical bar
+	"\N{HEBREW PUNCTUATION PASEQ}" => "\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}",
 
 
 	# below
@@ -162,19 +178,38 @@ method heb2BrUni($string, :$highlightTaamim) {
 	"\N{HEBREW ACCENT TELISHA GEDOLA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1345}",
 	"\N{HEBREW ACCENT TELISHA QETANA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1246}",
 	
+
+
+	"\N{HEBREW PUNCTUATION NUN HAFUKHA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
+
 	# only in אמ"ת.  For completeness
 	"\N{HEBREW ACCENT OLE}" => "\N{BRAILLE PATTERN DOTS-12345678}",
 	"\N{HEBREW ACCENT ILUY}" => "\N{BRAILLE PATTERN DOTS-12345678}",
 	"\N{HEBREW ACCENT DEHI}" => "\N{BRAILLE PATTERN DOTS-12345678}",
 	"\N{HEBREW ACCENT ZARQA}" => "\N{BRAILLE PATTERN DOTS-12345678}", # actually a Tzinor
+
+
 	
 	" " => "\N{BRAILLE PATTERN BLANK}"
 
 	);
+
+    my %map;
+    for ($self->mode){
+	when('CO'){
+	    %map = (%basicHebrew , %CO);	    
+	}
+	default{
+	    die "unknown encode mode $_";
+	}
+    }
+
     my @chars = split //, $string;
     # say Dumper(\@chars);
     my $brailleUnicode =  join "", map { $map{$_} || $_ } @chars;
     if( $highlightTaamim){
+
+	# FIX this is broken for non-CO modes.
 	my $brailleHTML = $brailleUnicode;
 	$brailleHTML =~ s{(($taamAbove|$taamBelow).)}{<span class="taam">$1</span>}g;
 	$brailleHTML =~ s{([$periodBraille$hyphenMinusBraille])}{<span class="punct">$1</span>}g;

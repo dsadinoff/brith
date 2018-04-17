@@ -17,8 +17,15 @@ use H2BEncoder;# qw(braille2BrailleAscii heb2BrailleUnicode);
 use common::sense;
 
 use charnames ();
+my $tEncoding ='CO';
+GetOptions(
+	   "taammim-encoding|e=s" => \$tEncoding,
 
-my $enc = H2BEncoder->new();
+	   );
+
+
+
+my $enc = H2BEncoder->new(mode => $tEncoding);
 my @toTest =(
     	"\N{HEBREW POINT DAGESH OR MAPIQ}" ,
 

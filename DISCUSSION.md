@@ -11,10 +11,9 @@ Clarity mode would be a two-character encoding:
      * ^T telisha gedola
 
 
-Encoding O1 is orthographic-mode, but I think I'm going to move in a
+Encoding CO is orthographic-mode, but I think I'm going to move in a
 different direction towards letters indicating the taam.
 
 
-
-Brief mode sacrifices clarity in order to squeeze into the remaining
-unallocated code points in 6-dot Hebrew.
+Encoding BR = Brief mode sacrifices clarity in order to squeeze into the remaining
+unallocated code points in 6-dot Hebrew.  

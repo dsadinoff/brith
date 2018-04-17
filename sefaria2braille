@@ -14,7 +14,7 @@ use LWP::Simple;
 use Data::Dumper;
 use Getopt::Long;
 use lib qw(.);
-use H2BEncoder; # qw(braille2BrailleAscii heb2BrailleUnicode); 
+use H2BEncoder;
 use common::sense;
 
 my $printHebrew =0;
@@ -22,14 +22,16 @@ my $printBrailleUnicode =0;
 my $printBrailleAscii =0;
 my $highlightTaamim =0;
 my $readStdin =0;
+my $tEncoding ='CO';
 GetOptions("print-hebrew|w" => \$printHebrew,
 	   "print-braille-unicode|u" => \$printBrailleUnicode,
 	   "print-braille-ascii|a" => \$printBrailleAscii,
 	   "highlight-taamim|t" => \$highlightTaamim,
+	   "taammim-encoding|e=s" => \$tEncoding,
 	   "stdin|s" => \$readStdin,
 	   );
 
-my $enc = H2BEncoder->new();
+my $enc = H2BEncoder->new(mode => $tEncoding);
 
 if( $readStdin){
     while(<>){
