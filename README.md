@@ -6,3 +6,9 @@ A quick and dirty attempt to think about a cantillation standard for Hebrew Brai
 The ideas here are EXPERIMENTAL and not to be taken as any kind of standard.  They may change at any time.
 
 See demos here: https://dsadinoff.github.io/hebrew-cantillation-braille/
+
+
+2017-4-17 - fixed error with dagesh-mapiq
+
+Known Issues:
+* Need to turn dagesh into a prefix rather than a postfix as in the source.

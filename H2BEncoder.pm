@@ -121,7 +121,7 @@ method heb2BrUni($string, :$highlightTaamim) {
 	# Need to encode: 32 symbols.
 
 	# 
-	"\N{HEBREW POINT DAGESH OR MAPIQ}" => "\N{BRAILLE PATTERN DOTS-1346}",
+	"\N{HEBREW POINT DAGESH OR MAPIQ}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1245}",
 
 
 	# below
@@ -147,7 +147,7 @@ method heb2BrUni($string, :$highlightTaamim) {
 	"\N{HEBREW ACCENT SHALSHELET}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1356}",
 	"\N{HEBREW ACCENT ZAQEF QATAN}" => "$taamAbove\N{BRAILLE PATTERN DOTS-13}",
 	"\N{HEBREW ACCENT ZAQEF GADOL}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12346}",
-	"\N{HEBREW ACCENT ZINOR}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1245}", # misnamed zarqa.  
+	"\N{HEBREW ACCENT ZINOR}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12345}", # misnamed zarqa.  consider zayin instead?
 	"\N{HEBREW ACCENT PASHTA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-245}",
 	"\N{HEBREW ACCENT GERESH}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12}",
 	"\N{HEBREW ACCENT GERESH MUQDAM}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12}", # unified with geresh
