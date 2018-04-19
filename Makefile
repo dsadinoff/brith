@@ -13,8 +13,8 @@ out5.$(ENCODING).html:
 	echo "<td>" >> $@.tmp
 	$(S2B) -u --highlight-taamim $(PASSAGE) >> $@.tmp
 
-	(echo "<br><pre>" && $(S2B) -a $(PASSAGE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
 	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(S2B) -a $(PASSAGE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
+
 
 
 	echo "<tr><td><pre>" >> $@.tmp
