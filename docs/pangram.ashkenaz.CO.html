@@ -28,7 +28,7 @@
 ⠙⠉<span class="taam">⠘⠛</span>⠗⠠⠛⠣<span class="taam">⠘⠛</span><span class="taam">⠘⠕</span>⠁⠀⠹⠠<span class="taam">⠘⠛</span>⠧⠊<span class="taam">⠰⠛</span>⠚⠗⠀⠚⠠<span class="taam">⠰⠪</span>⠹⠊⠚⠧⠀⠏⠠⠎⠊⠚⠟⠸⠳⠀⠍⠌⠗⠠⠡⠣<span class="taam">⠰⠆</span>⠁⠀⠞⠊⠋⠠<span class="taam">⠘⠛</span>⠭⠣<span class="taam">⠰⠉</span>⠁⠀⠍⠌⠗⠠⠡⠣<span class="taam">⠰⠆</span>⠁⠀⠎⠺⠪⠋⠀⠋⠣<span class="taam">⠘⠛</span>⠎<span class="taam">⠰⠃</span>⠬⠟<span class="punct">⠲</span>
 ⠩⠉ׁ⠇⠠⠩⠑ׁ<span class="taam">⠘⠵</span>⠇⠑⠹⠀⠟⠉⠗⠠⠝⠌⠚⠀⠋⠣⠗⠣<span class="taam">⠘⠭</span>⠓⠀⠍⠌⠗⠠⠡⠣⠁⠀⠡⠠<span class="taam">⠘⠛</span>⠋⠬⠇⠣<span class="taam">⠰⠞</span>⠓⠀⠚⠌⠗⠑⠭⠀⠧⠑<span class="taam">⠘⠛</span>⠝⠀⠚⠺⠪⠍<span class="taam">⠰⠽</span>⠺⠪:
 
-<br><pre>
+<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='pangram.ashkenaz.CO.html'>
 QCD,M&lt;^FA=MUNC^G;0X=ZCR,Q&lt;A^Q=MUNC^G;0X=SEG^GW[L^E=MUNC^G;0X=_\=MUNC^G;0X=R,VI^RJ$=MCH,FC^G;D*=FC^G%,ׁT&lt;A^J=MUNC^G;0X=Z&lt;Q/F-Q&lt;T&lt;^KN
 Z&lt;Q/F-G&lt;^GD^&amp;W[L=M/R,*&lt;;2A=TIF,^GX&lt;;CA=MUNC^G;0X=AE?,NCX,?&lt;^G;1A=F&lt;^GZ/^VR=?,^GLIJ%&lt;A-Q,TCN&lt;^GH^$
 ?,^G^NLIJ%&lt;A=G,DW[L&lt;H=QCD,M&lt;^FA=W,ACZ,L&lt;^BA=ACZ,L&lt;A-G/^G^BR/%=G/^GR,%Cׁ^\JIM
@@ -928,4 +928,26 @@ LINE FEED
 
 
 
-</pre><td><pre>
+</pre></td></table>
+
+    <script>
+     "use strict";
+     function download(text, name, type) {
+	 var a = document.getElementById("downlink");
+	 var file = new Blob([text], {type: type});
+	 a.href = URL.createObjectURL(file);
+	 a.download = name;
+     }
+     function postLoad(){
+	 
+	 var contents =  document.getElementById("brf-data").textContent;
+	 var fileNameSource =  document.getElementById("brf-data").dataset.sourceFileName;
+	 var fileName = fileNameSource.replace('.html','.brf');
+	 download(contents, fileName, 'text/plain');
+     }
+     
+
+     postLoad();
+
+     
+    </script>
