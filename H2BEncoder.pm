@@ -169,11 +169,83 @@ method getTaamData(){
 		 
 		 { src=>"\N{HEBREW POINT QAMATS QATAN}" , target=> "\N{BRAILLE PATTERN DOTS-12345678}", note=>"unify with Qamats?"},
 	
-	];
-
+		];
 	}
-
 	
+	when('CO'){
+	    
+    # Clarity - Orthographic
+    #this encoding uses an escape character .
+	    return [
+		{ src=>"-" ,target=> $hyphenMinusBraille,}
+		,{ src=>"." ,target=> $periodBraille,}
+		
+		
+
+		,{note => "This is a standard mentioned in the WP page. for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq	")
+		,{ src=>"\N{HEBREW POINT DAGESH OR MAPIQ}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1245}", note=>""} 
+
+		,{ src=>"\N{HEBREW PUNCTUATION PASEQ}"   ,target=>"\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}", note=>"From the English for Vertical Bar"}
+		
+		
+		# below
+		,{note => "below"}
+		#prefixed with "caps" dots-6
+		,{ src=>"\N{HEBREW ACCENT MERKHA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-23}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT TIPEHA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-14}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT MERKHA KEFULA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-2345}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ETNAHTA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-2}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT YERAH BEN YOMO}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-13456}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ATNAH HAFUKH}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-13456}", note=>""} # aka Yerech ben yomo
+		,{ src=>"\N{HEBREW ACCENT TEVIR}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1245}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT YETIV}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-246}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT MUNAH}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-356}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT MAHAPAKH}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-145}", note=>""}
+		
+		# not a taam-ACCENT But belongs on the bottom.
+		,{ src=>"\N{HEBREW POINT METEG}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-12}", note=>""}
+		
+		
+		# above
+		#prefixed with "up-top" dots-3
+		,{note => "above"}
+		,{ src=>"\N{HEBREW ACCENT SEGOL}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-15}", note=>""} # cf HEBREW POINT SEGOL
+		,{ src=>"\N{HEBREW ACCENT SHALSHELET}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZAQEF QATAN}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-13}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZAQEF GADOL}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12346}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZINOR}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12345}", note=>""} # misnamed zarqa.  consider zayin instead?
+		,{ src=>"\N{HEBREW ACCENT PASHTA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-245}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT GERESH}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12}", note=>""} # AKA Azla
+		,{ src=>"\N{HEBREW ACCENT GERESH MUQDAM}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12}", note=>""} # unified with geresh...
+		,{ src=>"\N{HEBREW ACCENT GERSHAYIM}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1256}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT REVIA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1235}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT QARNEY PARA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1346}", note=>""}
+		
+		,{ src=>"\N{HEBREW ACCENT PAZER}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1236}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT DARGA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-135}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT QADMA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-124}", note=>""}
+		
+		,{ src=>"\N{HEBREW ACCENT TELISHA GEDOLA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1345}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT TELISHA QETANA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1246}", note=>""}
+		
+		
+		
+		,{ src=>"\N{HEBREW PUNCTUATION NUN HAFUKHA}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""}
+
+		# only in אמ"ת.  For completeness
+		,{ src=>"\N{HEBREW ACCENT OLE}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ILUY}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT DEHI}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZARQA}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # actually a Tzinor
+		
+		# uncoded yet
+		,{ src=>"\N{HEBREW MARK UPPER DOT}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # 
+		,{ src=>"\N{HEBREW MARK LOWER DOT}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # 
+		
+		,{ src=>"\N{HEBREW POINT QAMATS QATAN}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # unify with Qamats?
+		
+		];
+	}
     }
 }
 
@@ -226,102 +298,14 @@ method heb2BrUni($string, :$highlightTaamim) {
     my $periodBraille= "\N{BRAILLE PATTERN DOTS-256}";
     my $hyphenMinusBraille= "\N{BRAILLE PATTERN DOTS-36}";
 
-    # Clarity - Orthographic
-    #this encoding uses an escape character .
-    my %CO = (
-	"-" => $hyphenMinusBraille,
-	"." => $periodBraille,
-	
-	
-	# NOVEL ENCODINGS HERE
-
-	# Need to encode: 32 symbols.
-
-	# This is a standard mentioned in the WP page
-	# for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq	
-	"\N{HEBREW POINT DAGESH OR MAPIQ}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1245}", 
-
-	# from the english for vertical bar
-	"\N{HEBREW PUNCTUATION PASEQ}" => "\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}",
-
-
-	# below
-	#prefixed with "caps" dots-6
-	"\N{HEBREW ACCENT MERKHA}" => "$taamBelow\N{BRAILLE PATTERN DOTS-23}",
-	"\N{HEBREW ACCENT TIPEHA}" => "$taamBelow\N{BRAILLE PATTERN DOTS-14}",
-	"\N{HEBREW ACCENT MERKHA KEFULA}" => "$taamBelow\N{BRAILLE PATTERN DOTS-2345}",
-	"\N{HEBREW ACCENT ETNAHTA}" => "$taamBelow\N{BRAILLE PATTERN DOTS-2}",
-	"\N{HEBREW ACCENT YERAH BEN YOMO}" => "$taamBelow\N{BRAILLE PATTERN DOTS-13456}",
-	"\N{HEBREW ACCENT ATNAH HAFUKH}" => "$taamBelow\N{BRAILLE PATTERN DOTS-13456}", # aka Yerech ben yomo
-	"\N{HEBREW ACCENT TEVIR}" => "$taamBelow\N{BRAILLE PATTERN DOTS-1245}",
-	"\N{HEBREW ACCENT YETIV}" => "$taamBelow\N{BRAILLE PATTERN DOTS-246}",
-	"\N{HEBREW ACCENT MUNAH}" => "$taamBelow\N{BRAILLE PATTERN DOTS-356}",
-	"\N{HEBREW ACCENT MAHAPAKH}" => "$taamBelow\N{BRAILLE PATTERN DOTS-145}",
-
-	# not a taam-ACCENT But belongs on the bottom.
-	"\N{HEBREW POINT METEG}" => "$taamBelow\N{BRAILLE PATTERN DOTS-12}",
-	
-
-	# above
-	#prefixed with "up-top" dots-3
-	"\N{HEBREW ACCENT SEGOL}" => "$taamAbove\N{BRAILLE PATTERN DOTS-15}", # cf HEBREW POINT SEGOL
-	"\N{HEBREW ACCENT SHALSHELET}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1356}",
-	"\N{HEBREW ACCENT ZAQEF QATAN}" => "$taamAbove\N{BRAILLE PATTERN DOTS-13}",
-	"\N{HEBREW ACCENT ZAQEF GADOL}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12346}",
-	"\N{HEBREW ACCENT ZINOR}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12345}", # misnamed zarqa.  consider zayin instead?
-	"\N{HEBREW ACCENT PASHTA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-245}",
-	"\N{HEBREW ACCENT GERESH}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12}", # AKA Azla
-	"\N{HEBREW ACCENT GERESH MUQDAM}" => "$taamAbove\N{BRAILLE PATTERN DOTS-12}", # unified with geresh...
-	"\N{HEBREW ACCENT GERSHAYIM}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1256}",
-	"\N{HEBREW ACCENT REVIA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1235}",
-	"\N{HEBREW ACCENT QARNEY PARA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1346}",
-
-	"\N{HEBREW ACCENT PAZER}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1236}",
-	"\N{HEBREW ACCENT DARGA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-135}",
-	"\N{HEBREW ACCENT QADMA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-124}",
-
-	"\N{HEBREW ACCENT TELISHA GEDOLA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1345}",
-	"\N{HEBREW ACCENT TELISHA QETANA}" => "$taamAbove\N{BRAILLE PATTERN DOTS-1246}",
-	
-
-
-	"\N{HEBREW PUNCTUATION NUN HAFUKHA}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-
-	# only in אמ"ת.  For completeness
-	"\N{HEBREW ACCENT OLE}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ILUY}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT DEHI}" => "\N{BRAILLE PATTERN DOTS-12345678}",
-	"\N{HEBREW ACCENT ZARQA}" => "\N{BRAILLE PATTERN DOTS-12345678}", # actually a Tzinor
-
-	# uncoded yet
-	"\N{HEBREW MARK UPPER DOT}" => "\N{BRAILLE PATTERN DOTS-12345678}", # 
-	"\N{HEBREW MARK LOWER DOT}" => "\N{BRAILLE PATTERN DOTS-12345678}", # 
-
-	"\N{HEBREW POINT QAMATS QATAN}" => "\N{BRAILLE PATTERN DOTS-12345678}", # unify with Qamats?
-	
-
-	);
-
 
 
     # Clarity - Phonetic
     #this encoding uses an escape character
-    my $cpData =$self->getTaamData();
+    my $taamData =$self->getTaamData();
     
-    my %CP = (map {if( $_->{src}){ ($_->{src} => $_->{target})}else{()}} @$cpData);
-    
-    my %map;
-    for ($self->mode){
-	when('CO'){
-	    %map = (%basicHebrew , %CO);	    
-	}
-	when('CP'){
-	    %map = (%basicHebrew , %CP);
-	}
-	default{
-	    die "unknown encode mode $_";
-	}
-    }
+    my %taamimMap = (map {if( $_->{src}){ ($_->{src} => $_->{target})}else{()}} @$taamData);
+    my %map = (%basicHebrew , %taamimMap);
 
     my @chars = split //, $string;
     # say Dumper(\@chars);
