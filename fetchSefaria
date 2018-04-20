@@ -1,0 +1,48 @@
+#!/home/ccsoft/perls/cm/perl -CS
+
+
+#fetches  data from sefaria
+
+
+use v5.12;
+use utf8;
+use JSON;
+use LWP::Simple;
+use Data::Dumper;
+use Getopt::Long;
+use lib qw(.);
+use common::sense;
+
+my $highlightTaamim =0;
+GetOptions(	   "highlight-taamim|t" => \$highlightTaamim,
+
+	   );
+
+#https://www.sefaria.org.il/api/texts/Exodus.10.1-11?commentary=0&context=1&pad=0&wrapLinks=1
+my $spec = $ARGV[0] || 'Exodus.10.1-11' ;
+#grab data from sefaria;
+my $url = "https://www.sefaria.org.il/api/texts/${spec}?commentary=0&context=1&pad=0&wrapLinks=1";
+my $json = qx(curl -s $url) or die "failed to get $url";
+my $obj = decode_json($json);
+my @lines;
+if( $obj->{isSpanning}){
+    @lines = map {@{$_}} @{$obj->{he}};
+}
+else{
+    @lines = @{$obj->{he}};
+}
+
+my $first = $obj->{sections}[1]-1;
+splice @lines, 0, $first;
+my $totalPassages =  1+ $obj->{toSections}[1]- $obj->{sections}[1];
+my $count =0; 
+for my $line(@lines){
+    say $line;
+    if( ! $obj->{isSpanning}){
+	$count++;
+	if( $count >= $totalPassages){
+	    last;
+	}
+    }
+}
+

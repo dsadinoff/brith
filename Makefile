@@ -1,11 +1,40 @@
+#dots
+#PASSAGE=Deuteronomy.29.28
+
 PASSAGE=Exodus.10.1-11
 # PASSAGE=Exodus.10.1-2
 S2B=./sefaria2braille -e $(ENCODING)
-ENCODING=CO
+FETCH=./fetchSefaria
 
-OUTPUTS += out5.$(ENCODING).html
+PFILE = $(PASSAGE).utf8
+ENCODE=./encodeHebrew -e $(ENCODING)
+ENCODING=CP
+
+#OUTPUTS += out5.$(ENCODING).html
+OUTPUTS += $(PASSAGE).$(ENCODING).html
 OUTPUTS += pangram.ashkenaz.$(ENCODING).html
 OUTPUTS += summary.$(ENCODING).html
+
+
+$(PASSAGE).$(ENCODING).html:
+	cat pre1.html  > $@.tmp
+	$(FETCH) $(PASSAGE) > $(PFILE)
+	cat $(PFILE) >> $@.tmp
+	echo "<td>" >> $@.tmp
+	$(ENCODE) -u --highlight-taamim $(PFILE) >> $@.tmp
+
+	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a $(PFILE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
+
+
+
+	echo "<tr><td><pre>" >> $@.tmp
+	oduni -h -s  $(PFILE) >> $@.tmp
+	echo "</pre><td><pre>" >> $@.tmp
+	$(ENCODE) -u $(PFILE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+	echo "</pre></td></table>" >> $@.tmp
+	cat post-script.html  >> $@.tmp
+	mv $@.tmp $@
+
 
 out5.$(ENCODING).html:
 	cat pre1.html  > $@.tmp

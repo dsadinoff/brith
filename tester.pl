@@ -26,61 +26,63 @@ GetOptions(
 
 
 my $enc = H2BEncoder->new(mode => $tEncoding);
-my @toTest =(
-    	"\N{HEBREW POINT DAGESH OR MAPIQ}" ,
 
-    "--",
-	"\N{HEBREW PUNCTUATION MAQAF}" ,
-	"\N{HEBREW PUNCTUATION SOF PASUQ}" ,
-	# not a taam-ACCENT But belongs on the bottom.
-	"\N{HEBREW POINT METEG}" ,
 
-    "--",
+# my @toTest =(
+#     	"\N{HEBREW POINT DAGESH OR MAPIQ}" ,
 
-	# below
-	#prefixed with "caps" dots-6
-	"\N{HEBREW ACCENT MERKHA}" ,
-	"\N{HEBREW ACCENT TIPEHA}" ,
-	"\N{HEBREW ACCENT MERKHA KEFULA}" ,
-	"\N{HEBREW ACCENT ETNAHTA}" ,
-	"\N{HEBREW ACCENT YERAH BEN YOMO}" ,
-	"\N{HEBREW ACCENT ATNAH HAFUKH}" ,
-	"\N{HEBREW ACCENT TEVIR}" ,
-	"\N{HEBREW ACCENT YETIV}" ,
-	"\N{HEBREW ACCENT MUNAH}" ,
-	"\N{HEBREW ACCENT MAHAPAKH}" ,
+#     "--",
+# 	"\N{HEBREW PUNCTUATION MAQAF}" ,
+# 	"\N{HEBREW PUNCTUATION SOF PASUQ}" ,
+# 	# not a taam-ACCENT But belongs on the bottom.
+# 	"\N{HEBREW POINT METEG}" ,
 
-    "--",
+#     "--",
 
-	# above
-	#prefixed with "up-top" dots-3
-	"\N{HEBREW ACCENT SEGOL}" ,
-	"\N{HEBREW ACCENT SHALSHELET}" ,
-	"\N{HEBREW ACCENT ZAQEF QATAN}" ,
-	"\N{HEBREW ACCENT ZAQEF GADOL}" ,
-	"\N{HEBREW ACCENT ZINOR}" ,
-	"\N{HEBREW ACCENT PASHTA}" ,
-	"\N{HEBREW ACCENT GERESH}" ,
-	"\N{HEBREW ACCENT GERESH MUQDAM}" ,
-	"\N{HEBREW ACCENT GERSHAYIM}" ,
-	"\N{HEBREW ACCENT REVIA}" ,
+# 	# below
+# 	#prefixed with "caps" dots-6
+# 	"\N{HEBREW ACCENT MERKHA}" ,
+# 	"\N{HEBREW ACCENT TIPEHA}" ,
+# 	"\N{HEBREW ACCENT MERKHA KEFULA}" ,
+# 	"\N{HEBREW ACCENT ETNAHTA}" ,
+# 	"\N{HEBREW ACCENT YERAH BEN YOMO}" ,
+# 	"\N{HEBREW ACCENT ATNAH HAFUKH}" ,
+# 	"\N{HEBREW ACCENT TEVIR}" ,
+# 	"\N{HEBREW ACCENT YETIV}" ,
+# 	"\N{HEBREW ACCENT MUNAH}" ,
+# 	"\N{HEBREW ACCENT MAHAPAKH}" ,
 
-	"\N{HEBREW ACCENT PAZER}" ,
-	"\N{HEBREW ACCENT DARGA}" ,
-	"\N{HEBREW ACCENT QADMA}" ,
+#     "--",
 
-	"\N{HEBREW ACCENT TELISHA GEDOLA}" ,
-	"\N{HEBREW ACCENT TELISHA QETANA}" ,
-	"\N{HEBREW ACCENT QARNEY PARA}" ,
+# 	# above
+# 	#prefixed with "up-top" dots-3
+# 	"\N{HEBREW ACCENT SEGOL}" ,
+# 	"\N{HEBREW ACCENT SHALSHELET}" ,
+# 	"\N{HEBREW ACCENT ZAQEF QATAN}" ,
+# 	"\N{HEBREW ACCENT ZAQEF GADOL}" ,
+# 	"\N{HEBREW ACCENT ZINOR}" ,
+# 	"\N{HEBREW ACCENT PASHTA}" ,
+# 	"\N{HEBREW ACCENT GERESH}" ,
+# 	"\N{HEBREW ACCENT GERESH MUQDAM}" ,
+# 	"\N{HEBREW ACCENT GERSHAYIM}" ,
+# 	"\N{HEBREW ACCENT REVIA}" ,
 
-    "--",
+# 	"\N{HEBREW ACCENT PAZER}" ,
+# 	"\N{HEBREW ACCENT DARGA}" ,
+# 	"\N{HEBREW ACCENT QADMA}" ,
+
+# 	"\N{HEBREW ACCENT TELISHA GEDOLA}" ,
+# 	"\N{HEBREW ACCENT TELISHA QETANA}" ,
+# 	"\N{HEBREW ACCENT QARNEY PARA}" ,
+
+#     "--",
 	
-	# only in אמ"ת.  For completeness
-	"\N{HEBREW ACCENT OLE}" ,
-	"\N{HEBREW ACCENT ILUY}" ,
-	"\N{HEBREW ACCENT DEHI}" ,
-    "\N{HEBREW ACCENT ZARQA}" ,
-    );
+# 	# only in אמ"ת.  For completeness
+# 	"\N{HEBREW ACCENT OLE}" ,
+# 	"\N{HEBREW ACCENT ILUY}" ,
+# 	"\N{HEBREW ACCENT DEHI}" ,
+#     "\N{HEBREW ACCENT ZARQA}" ,
+#     );
 
 say <<EOF;
 <!html>
@@ -89,7 +91,9 @@ say <<EOF;
 	<meta  charset="UTF-8">
 	<style>
 	 td {vertical-align:top;}
-	 td.heb {direction:rtl; unicode-bidi:bidi-override;}
+         td.heb {direction:rtl; unicode-bidi:bidi-override;}
+td.braille {  background:lightgrey; }
+td.braille span {  background:white; }
 	</style>
     </head>
     <body>
@@ -100,17 +104,21 @@ say <<EOF;
 
 EOF
 
+    my $basic = $enc->basicData;
     
-    for my $char (@toTest){
-	if( $char eq'--'){
-	    say qq(<tr><td colspan=2"><hr>);
+    for my $struct (@$basic, @{$enc->getTaamData()}){
+	my $char = $struct->{src};
+	my $note = $struct->{note};
+	if( !$char){
+	    say qq(<tr><td colspan=2"><hr> $note);
 	    next;
 	}
+
 	my $name = charnames::viacode(ord($char));
 
 	my $text = "\N{HEBREW LETTER ALEF}$char";
 	my $uni  = $enc->heb2BrUni($text,highlightTaamim => 1);
-	say "<tr><td>$name<td>$text<td>$uni</td></tr>";
+	say "<tr><td>$name<td>$text<td class='braille'>$uni</td><td>$note</td></tr>";
 }
 say "</table>";
 

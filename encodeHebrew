@@ -1,4 +1,4 @@
-#!/home/ccsoft/perls/cm/perl -CS
+#!/home/ccsoft/perls/cm/perl -CSD
 
 
 #see
@@ -21,52 +21,20 @@ my $printHebrew =0;
 my $printBrailleUnicode =0;
 my $printBrailleAscii =0;
 my $highlightTaamim =0;
-my $readStdin =0;
 my $tEncoding ='CO';
 GetOptions("print-hebrew|w" => \$printHebrew,
 	   "print-braille-unicode|u" => \$printBrailleUnicode,
 	   "print-braille-ascii|a" => \$printBrailleAscii,
 	   "highlight-taamim|t" => \$highlightTaamim,
 	   "taammim-encoding|e=s" => \$tEncoding,
-	   "stdin|s" => \$readStdin,
+
 	   );
 
 my $enc = H2BEncoder->new(mode => $tEncoding);
 
-if( $readStdin){
-    while(<>){
-	chomp;
-	emitLine($_);
-    }
-}
-else{
-    #https://www.sefaria.org.il/api/texts/Exodus.10.1-11?commentary=0&context=1&pad=0&wrapLinks=1
-    my $spec = $ARGV[0] || 'Exodus.10.1-11' ;
-    #grab data from sefaria;
-    my $url = "https://www.sefaria.org.il/api/texts/${spec}?commentary=0&context=1&pad=0&wrapLinks=1";
-    my $json = qx(curl -s $url) or die "failed to get $url";
-    my $obj = decode_json($json);
-    my @lines;
-    if( $obj->{isSpanning}){
-	@lines = map {@{$_}} @{$obj->{he}};
-    }
-    else{
-	@lines = @{$obj->{he}};
-    }
-
-    my $first = $obj->{sections}[1]-1;
-    splice @lines, 0, $first;
-    my $totalPassages =  1+ $obj->{toSections}[1]- $obj->{sections}[1];
-    my $count =0; 
-    for my $line(@lines){
-	emitLine($line);
-	if( ! $obj->{isSpanning}){
-	    $count++;
-	    if( $count >= $totalPassages){
-		last;
-	    }
-	}
-    }
+while(<>){
+    chomp;
+    emitLine($_);
 }
 
 exit 0;
