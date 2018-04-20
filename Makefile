@@ -3,7 +3,7 @@
 
 PASSAGE=Exodus.10.1-11
 # PASSAGE=Exodus.10.1-2
-S2B=./sefaria2braille -e $(ENCODING)
+# S2B=./sefaria2braille -e $(ENCODING)
 FETCH=./fetchSefaria
 
 PFILE = $(PASSAGE).utf8
@@ -36,36 +36,36 @@ $(PASSAGE).$(ENCODING).html:
 	mv $@.tmp $@
 
 
-out5.$(ENCODING).html:
-	cat pre1.html  > $@.tmp
-	$(S2B) -w $(PASSAGE)  >> $@.tmp
-	echo "<td>" >> $@.tmp
-	$(S2B) -u --highlight-taamim $(PASSAGE) >> $@.tmp
+# out5.$(ENCODING).html:
+# 	cat pre1.html  > $@.tmp
+# 	$(S2B) -w $(PASSAGE)  >> $@.tmp
+# 	echo "<td>" >> $@.tmp
+# 	$(S2B) -u --highlight-taamim $(PASSAGE) >> $@.tmp
 
-	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(S2B) -a $(PASSAGE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
+# 	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(S2B) -a $(PASSAGE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
 
 
 
-	echo "<tr><td><pre>" >> $@.tmp
-	$(S2B) -w $(PASSAGE)|oduni -h -s  >> $@.tmp
-	echo "</pre><td><pre>" >> $@.tmp
-	$(S2B) -u $(PASSAGE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
-	echo "</pre></td></table>" >> $@.tmp
-	cat post-script.html  >> $@.tmp
-	mv $@.tmp $@
+# 	echo "<tr><td><pre>" >> $@.tmp
+# 	$(S2B) -w $(PASSAGE)|oduni -h -s  >> $@.tmp
+# 	echo "</pre><td><pre>" >> $@.tmp
+# 	$(S2B) -u $(PASSAGE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+# 	echo "</pre></td></table>" >> $@.tmp
+# 	cat post-script.html  >> $@.tmp
+# 	mv $@.tmp $@
 
 pangram.ashkenaz.$(ENCODING).html: pangram.ashkenaz
 	cat pre1.html  > $@.tmp
-	$(S2B) -s -w < $<  >> $@.tmp
+	cat  $<  >> $@.tmp
 	echo "<td>" >> $@.tmp
-	$(S2B) -s -u --highlight-taamim < $< >> $@.tmp
+	$(ENCODE) -u --highlight-taamim $< >> $@.tmp
 
-	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(S2B) -a -s < $< | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
+	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a  $< | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
 
 	echo "<tr><td><pre>" >> $@.tmp
-	$(S2B) -w -s  < $< |oduni -h -s  >> $@.tmp
+	oduni -h -s $< >> $@.tmp
 	echo "</pre><td><pre>" >> $@.tmp
-	$(S2B) -u -s < $<|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+	$(ENCODE) -u $<|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
 	echo "</pre></td></table>" >> $@.tmp
 	cat post-script.html  >> $@.tmp
 	mv $@.tmp $@
