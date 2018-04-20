@@ -129,7 +129,7 @@ method getTaamData(){
 		 { src=>"\N{HEBREW POINT METEG}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-12}", note=>"taam-ACCENT But belongs on the bottom"},
 		 
 		 
-		 { note => "below"},
+		 { note => "above"},
 		 { src=>"\N{HEBREW ACCENT SEGOL}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-234}", note=>"HEBREW POINT SEGOL  - samech"},
 		 { src=>"\N{HEBREW ACCENT SHALSHELET}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>""},
 		 { src=>"\N{HEBREW ACCENT ZAQEF QATAN}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-125}", note=>"heh"},
@@ -182,7 +182,7 @@ method getTaamData(){
 		
 		
 
-		,{note => "This is a standard mentioned in the WP page. for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq	")
+		,{note => "This is a standard mentioned in the WP page. for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq"}
 		,{ src=>"\N{HEBREW POINT DAGESH OR MAPIQ}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1245}", note=>""} 
 
 		,{ src=>"\N{HEBREW PUNCTUATION PASEQ}"   ,target=>"\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}", note=>"From the English for Vertical Bar"}
