@@ -83,3 +83,8 @@ push: $(OUTPUTS)
 
 clean:
 	-rm  $(OUTPUTS)
+
+
+all:
+	$(MAKE)  clean push ENCODING=CO
+	$(MAKE) clean push ENCODING=CP

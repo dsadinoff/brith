@@ -85,6 +85,9 @@ method basicData{
 
 	{ src=>" "  , target=> "\N{BRAILLE PATTERN BLANK}"},
 
+	{ src=>"["  , target=> "\N{BRAILLE PATTERN DOTS-6}\N{BRAILLE PATTERN DOTS-2356}"},
+	{ src=>"]"  , target=> "\N{BRAILLE PATTERN DOTS-2356}\N{BRAILLE PATTERN DOTS-3}"},
+
 	];
 }
 
@@ -297,7 +300,6 @@ method heb2BrUni($string, :$highlightTaamim) {
 
     my $periodBraille= "\N{BRAILLE PATTERN DOTS-256}";
     my $hyphenMinusBraille= "\N{BRAILLE PATTERN DOTS-36}";
-
 
 
     # Clarity - Phonetic
