@@ -7,6 +7,3 @@ The ideas here are EXPERIMENTAL and not to be taken as any kind of standard.  Th
 
 See demos here: https://dsadinoff.github.io/hebrew-cantillation-braille/
 
-
-Known Issues:
-* Need to turn dagesh into a prefix rather than a postfix as in the source.
