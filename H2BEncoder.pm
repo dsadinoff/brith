@@ -48,17 +48,18 @@ method brailleReorder($line){
 			$prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 		    }
 		    when('HEH_BCFT'){
-			$letter=m/[הבכפת]/
+
+			if( $letter =~ m/[הבכפת]/){
+			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+			}
+		    }
+		    when('HEH_BGDCFT'){
+			$letter =~ m/[הבגדכפת]/
 			    and 
 			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 		    }
 		    when('HEH_BGDCFT'){
-			$letter=m/[הבגדכפת]/
-			    and 
-			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
-		    }
-		    when('HEH_BGDCFT'){
-			$letter=m/[הבגדכפת]/
+			$letter =~ m/[הבגדכפת]/
 			    and 
 			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 		    }
@@ -327,6 +328,8 @@ method heb2BrUni($string, :$highlightTaamim) {
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER KAF}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER FINAL KAF}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
 
+	{ pat => qr"\N{HEBREW LETTER PE WITH DAGESH}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
+	{ pat => qr"\N{HEBREW LETTER FINAL PE WITH DAGESH}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER PE}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER FINAL PE}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
 
@@ -346,7 +349,7 @@ method heb2BrUni($string, :$highlightTaamim) {
 	);
 
 
-    
+
     for  my $struct (@precomposed){
 	my $pat = $struct->{pat};
 	my $repl = $struct->{repl};
