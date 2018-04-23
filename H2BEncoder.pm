@@ -80,13 +80,19 @@ method brailleReorder($line){
 
 
 method basicData{
+    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
     return [
-{ src=>"א"  , target=> "\N{BRAILLE PATTERN DOTS-1}"},
-{ src=>"ב"  , target=> "\N{BRAILLE PATTERN DOTS-1236}"},
-{ src=>"ג"  , target=> "\N{BRAILLE PATTERN DOTS-1245}"},
-{ src=>"ד"  , target=> "\N{BRAILLE PATTERN DOTS-145}"},
-{ src=>"ה"  , target=> "\N{BRAILLE PATTERN DOTS-125}"},
-
+	{ src=>"א"  , target=> "\N{BRAILLE PATTERN DOTS-1}"},
+	{ src=>"ב"  , target=> "\N{BRAILLE PATTERN DOTS-1236}"},
+	{ src=>"\N{HEBREW LETTER BET WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-12}"},
+	
+	
+	
+	{ src=>"ג"  , target=> "\N{BRAILLE PATTERN DOTS-1245}"},
+	{ src=>"ד"  , target=> "\N{BRAILLE PATTERN DOTS-145}"},
+	{ src=>"ה"  , target=> "\N{BRAILLE PATTERN DOTS-125}"},
+	{ src=>"\N{HEBREW LETTER HE WITH MAPIQ}"  , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1245}\N{BRAILLE PATTERN DOTS-125}"},
+	
 { src=>"ו"  , target=> "\N{BRAILLE PATTERN DOTS-2456}"},
 
 	
@@ -96,6 +102,11 @@ method basicData{
 { src=>"י"  , target=> "\N{BRAILLE PATTERN DOTS-245}"},
 { src=>"כ"  , target=> "\N{BRAILLE PATTERN DOTS-16}"},
 { src=>"ך"  , target=> "\N{BRAILLE PATTERN DOTS-16}"},
+
+{ src=>"\N{HEBREW LETTER KAF WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-13}"},
+{ src=>"\N{HEBREW LETTER FINAL KAF WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-13}"},
+
+	
 
 { src=>"ל"  , target=> "\N{BRAILLE PATTERN DOTS-123}"},
 { src=>"מ"  , target=> "\N{BRAILLE PATTERN DOTS-134}"},
@@ -110,6 +121,12 @@ method basicData{
 
 { src=>"פ"  , target=> "\N{BRAILLE PATTERN DOTS-124}"},
 { src=>"ף"  , target=> "\N{BRAILLE PATTERN DOTS-124}"},
+
+{ src=>"\N{HEBREW LETTER PE WITH DAGESH}"        , target=> "\N{BRAILLE PATTERN DOTS-1234}"},
+{ src=>"\N{HEBREW LETTER FINAL PE WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-1234}"},
+
+
+	
 	
 { src=>"צ"  , target=> "\N{BRAILLE PATTERN DOTS-2346}"},
 { src=>"ץ"  , target=> "\N{BRAILLE PATTERN DOTS-2346}"},
@@ -122,6 +139,9 @@ method basicData{
 { src=>"שׂ"  , target=> "\N{BRAILLE PATTERN DOTS-156}"},
 
 { src=>"ת"  , target=> "\N{BRAILLE PATTERN DOTS-1456}"},
+
+{ src=>"ת"  , target=> "\N{BRAILLE PATTERN DOTS-1456}"},
+{ src=>"\N{HEBREW LETTER TAV WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-1256}"},
 
 
 { src=>"\N{HEBREW POINT HIRIQ}"  , target=> "\N{BRAILLE PATTERN DOTS-24}"},

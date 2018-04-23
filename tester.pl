@@ -64,7 +64,7 @@ EOF
 
 	my $name = charnames::viacode(ord($char));
 
-	my $text = "\N{HEBREW LETTER ALEF}$char";
+	my $text = "\N{HEBREW LETTER BET}$char";
 	my $uni  = $enc->heb2BrUni($text,highlightTaamim => 1);
 	say "<tr><td>$name<td>$text<td class='braille'>$uni</td><td>$note</td></tr>";
 }
