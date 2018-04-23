@@ -58,11 +58,6 @@ method brailleReorder($line){
 			    and 
 			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 		    }
-		    when('HEH_BGDCFT'){
-			$letter =~ m/[הבגדכפת]/
-			    and 
-			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
-		    }
 		    default{
 			die " unknown dagesh mode: ".$self->dageshMode;
 		    }
@@ -138,7 +133,6 @@ method basicData{
 { src=>"שׁ"  , target=> "\N{BRAILLE PATTERN DOTS-146}"},
 { src=>"שׂ"  , target=> "\N{BRAILLE PATTERN DOTS-156}"},
 
-{ src=>"ת"  , target=> "\N{BRAILLE PATTERN DOTS-1456}"},
 
 { src=>"ת"  , target=> "\N{BRAILLE PATTERN DOTS-1456}"},
 { src=>"\N{HEBREW LETTER TAV WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-1256}"},
