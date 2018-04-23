@@ -7,60 +7,41 @@ PASSAGE=Exodus.10.1-11
 FETCH=./fetchSefaria
 
 PFILE = $(PASSAGE).utf8
-ENCODE=./encodeHebrew -e $(ENCODING)
+ENCODE=./encodeHebrew -e $(ENCODING) -m $(DAGESHMODE)
 ENCODING=CP
+DAGESHMODE=HEH_BCFT
 
 #OUTPUTS += out5.$(ENCODING).html
-OUTPUTS += $(PASSAGE).$(ENCODING).html
-OUTPUTS += pangram.ashkenaz.$(ENCODING).html
-OUTPUTS += summary.$(ENCODING).html
+OUTPUTS += $(PASSAGE).$(ENCODING).$(DAGESHMODE).html
+OUTPUTS += pangram.ashkenaz.$(ENCODING).$(DAGESHMODE).html
+OUTPUTS += summary.$(ENCODING).$(DAGESHMODE).html
 
 
-$(PASSAGE).$(ENCODING).html:
+$(PASSAGE).$(ENCODING).$(DAGESHMODE).html:
 	cat pre1.html  > $@.tmp
 	$(FETCH) $(PASSAGE) > $(PFILE)
-	cat $(PFILE) >> $@.tmp
-	echo "<td>" >> $@.tmp
-	$(ENCODE) -u --highlight-taamim $(PFILE) >> $@.tmp
+	$(ENCODE) -w --add-word-ids $(PFILE) >> $@.tmp
+	echo "<td >" >> $@.tmp
+	$(ENCODE) --add-space -u --highlight-taamim --add-word-ids $(PFILE) >> $@.tmp
 
-	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a $(PFILE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
-
-
-
+	(echo "<br><a href='' id=downlink>Download BRF</a><div id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a $(PFILE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</div></td>" ) >> $@.tmp
 	echo "<tr><td><pre>" >> $@.tmp
 	oduni -h -s  $(PFILE) >> $@.tmp
 	echo "</pre><td><pre>" >> $@.tmp
-	$(ENCODE) -u $(PFILE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+	$(ENCODE)  -u $(PFILE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
 	echo "</pre></td></table>" >> $@.tmp
 	cat post-script.html  >> $@.tmp
 	mv $@.tmp $@
 
 
-# out5.$(ENCODING).html:
-# 	cat pre1.html  > $@.tmp
-# 	$(S2B) -w $(PASSAGE)  >> $@.tmp
-# 	echo "<td>" >> $@.tmp
-# 	$(S2B) -u --highlight-taamim $(PASSAGE) >> $@.tmp
 
-# 	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(S2B) -a $(PASSAGE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
-
-
-
-# 	echo "<tr><td><pre>" >> $@.tmp
-# 	$(S2B) -w $(PASSAGE)|oduni -h -s  >> $@.tmp
-# 	echo "</pre><td><pre>" >> $@.tmp
-# 	$(S2B) -u $(PASSAGE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
-# 	echo "</pre></td></table>" >> $@.tmp
-# 	cat post-script.html  >> $@.tmp
-# 	mv $@.tmp $@
-
-pangram.ashkenaz.$(ENCODING).html: pangram.ashkenaz
+pangram.ashkenaz.$(ENCODING).$(DAGESHMODE).html: pangram.ashkenaz
 	cat pre1.html  > $@.tmp
-	cat  $<  >> $@.tmp
+	$(ENCODE) -w --add-word-ids  $<  >> $@.tmp
 	echo "<td>" >> $@.tmp
-	$(ENCODE) -u --highlight-taamim $< >> $@.tmp
+	$(ENCODE) --add-word-ids --add-space -u --highlight-taamim $< >> $@.tmp
 
-	(echo "<br><a href='' id=downlink>Download BRF</a><pre id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a  $< | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</pre></td>" ) >> $@.tmp
+	(echo "<br><a href='' id=downlink>Download BRF</a><div id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a  $< | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</div></td>" ) >> $@.tmp
 
 	echo "<tr><td><pre>" >> $@.tmp
 	oduni -h -s $< >> $@.tmp
@@ -71,8 +52,8 @@ pangram.ashkenaz.$(ENCODING).html: pangram.ashkenaz
 	mv $@.tmp $@
 
 
-summary.$(ENCODING).html: tester.pl
-	./tester.pl  -e $(ENCODING) > $@.tmp;
+summary.$(ENCODING).$(DAGESHMODE).html: tester.pl
+	./tester.pl -m $(DAGESHMODE)  -e $(ENCODING) > $@.tmp;
 	mv $@.tmp $@
 
 

@@ -16,21 +16,45 @@ use Getopt::Long;
 use lib qw(.);
 use H2BEncoder;
 use common::sense;
+use Unicode::Normalize qw(decompose reorder NFC NFD);
 
 my $printHebrew =0;
 my $printBrailleUnicode =0;
 my $printBrailleAscii =0;
 my $highlightTaamim =0;
 my $tEncoding ='CO';
-GetOptions("print-hebrew|w" => \$printHebrew,
-	   "print-braille-unicode|u" => \$printBrailleUnicode,
-	   "print-braille-ascii|a" => \$printBrailleAscii,
-	   "highlight-taamim|t" => \$highlightTaamim,
-	   "taammim-encoding|e=s" => \$tEncoding,
+my $dageshMode ='HEH_BGDCFT';
+my $debugReorder;
+my $wordIDs;
+my $addSpace;
+GetOptions(
 
+    "taammim-encoding|e=s" => \$tEncoding,
+    "dagesh-mode|m=s" => \$dageshMode,
+
+    "debug-reorder|d" => \$debugReorder,
+    "print-hebrew|w" => \$printHebrew,
+    "print-braille-unicode|u" => \$printBrailleUnicode,
+    "print-braille-ascii|a" => \$printBrailleAscii,
+    "add-space|s" => \$addSpace,
+
+
+    "highlight-taamim|t" => \$highlightTaamim,
+    "add-word-ids|i" => \$wordIDs,
+
+    
 	   );
 
-my $enc = H2BEncoder->new(mode => $tEncoding);
+my $enc = H2BEncoder->new(mode => $tEncoding, dageshMode => $dageshMode);
+
+my $counter =0;
+sub addWordNums{
+    my ($line, $isBraille) = @_;
+    my $splitter = ($isBraille? "\N{BRAILLE PATTERN BLANK}" : " ");
+    my $prefix = ($isBraille? "br-" : "tr-");
+    my @words = split($splitter, $line);
+    return join $splitter,  map {$counter++; qq{<span class="${prefix}word" id="${prefix}$counter">$_</span>};}  @words;
+}
 
 while(<>){
     chomp;
@@ -40,16 +64,24 @@ while(<>){
 exit 0;
 sub emitLine{    
     my $line = shift;
+    $line = NFD($line);
+    
+    say addWordNums($line,0) if $printHebrew;
 
-    say $line if $printHebrew;
 
+    say $enc->brailleReorder($line) if $debugReorder;
+    
     my $p1Pure = $enc->heb2BrUni($line);
 
     
     my $p1 = $enc->heb2BrUni($line, highlightTaamim => $highlightTaamim);
-    say $p1 if $printBrailleUnicode;
+
+    $p1 =~ s{\N{BRAILLE PATTERN BLANK}}{\N{BRAILLE PATTERN BLANK} }g if $addSpace;
+    say addWordNums($p1, 1) if $printBrailleUnicode;
     
     my $p2 = $enc->brUni2BrAscii($p1Pure);
+
+    $p2 =~ s/=/ /g;		# dont actually need to code zeroes. better with spaces for now.
     say $p2 if $printBrailleAscii;
 
     

@@ -1,3 +1,8 @@
+	
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.js"
+  integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
+    crossorigin="anonymous"></script>
 
     <script>
      "use strict";
@@ -7,16 +12,41 @@
 	 a.href = URL.createObjectURL(file);
 	 a.download = name;
      }
-     function postLoad(){
+     function prepareBrfDownload(){
 	 
 	 var contents =  document.getElementById("brf-data").textContent;
 	 var fileNameSource =  document.getElementById("brf-data").dataset.sourceFileName;
 	 var fileName = fileNameSource.replace('.html','.brf');
 	 download(contents, fileName, 'text/plain');
      }
-     
 
-     postLoad();
+     $(document).ready(function(){
+	 prepareBrfDownload();
+	 $('.br-word').hover(
+	     function(e){
+		 var idnum =this.id.substr(3);
+		 var theID = "tr-"+idnum;
+		 $('#'+theID).addClass('highlight');
+		 $(this).addClass('highlight');
+	     },
+	     function(e){
+		 $('.highlight').removeClass('highlight');
+	     }
+	 );
+ 
+	 $('.tr-word').hover(
+	     function(e){
+		 var idnum =this.id.substr(3);
+		 var theID = "br-"+idnum;
+		 $('#'+theID).addClass('highlight');
+		 $(this).addClass('highlight');
+	     },
+	     function(e){
+		 $('.highlight').removeClass('highlight');
+	     }
+	 );
+
+     });
 
      
     </script>

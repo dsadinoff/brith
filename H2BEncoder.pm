@@ -13,6 +13,15 @@ has mode => (
     );
 
 
+# allowed values HEH_BCFT
+# allowed values HEH_BGDCFT
+# allowed values ALL
+has dageshMode => (
+    is => 'rw',
+    default => 'HEH_BGDCFT',	# dagesh kal (mostly)  + mapiq
+    );
+
+
 method brUni2BrAscii($input){
     $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}{A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
     return $input;
@@ -21,6 +30,51 @@ method brUni2BrAscii($input){
 method toMap($dataAref){
     my %map = (map {if( $_->{src}){ ($_->{src} => $_->{target})}else{()}} @$dataAref);
     return %map
+}
+
+
+# dagesh first,
+# remove if requested
+method brailleReorder($line){
+    my $output = '';
+    while( $line =~ m/(?:(?<letter>\p{L})(?<combiners>\p{M}*))|(?<nonLetters>\P{L}+)/xg){
+	if( $+{letter}){
+	    my $letter = $+{letter};
+	    my $prefix ='';
+	    my $comb = $+{combiners} //"";
+	    if( $comb =~ s/\N{HEBREW POINT DAGESH OR MAPIQ}//){
+		for( $self->dageshMode){
+		    when('ALL'){
+			$prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+		    }
+		    when('HEH_BCFT'){
+			$letter=m/[הבכפת]/
+			    and 
+			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+		    }
+		    when('HEH_BGDCFT'){
+			$letter=m/[הבגדכפת]/
+			    and 
+			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+		    }
+		    when('HEH_BGDCFT'){
+			$letter=m/[הבגדכפת]/
+			    and 
+			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+		    }
+		    default{
+			die " unknown dagesh mode: ".$self->dageshMode;
+		    }
+		}
+	    }
+	    $output .= "${prefix}$letter${comb}";
+	}
+	else{
+	    $output .= $+{nonLetters};
+
+	}
+    }
+    return $output;
 }
 
 
@@ -259,23 +313,30 @@ method getBasicDataMap(){
 
 # convert hebrew to unicode Braille
 method heb2BrUni($string, :$highlightTaamim) {
-    my @precomposed = (
-	{ pat => qr"\N{HEBREW LETTER BET}\N{HEBREW POINT DAGESH OR MAPIQ}" , repl => "\N{BRAILLE PATTERN DOTS-12}"},
 
-	{ pat => qr"\N{HEBREW LETTER VAV}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, # שורוק
+    $string = $self->brailleReorder($string);
+
+    # in Sring, dageshes now IMMEDIATELY preceed the letter
+    
+    my @precomposed = (
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER BET}" , repl => "\N{BRAILLE PATTERN DOTS-12}"},
+
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER VAV}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, # שורוק
 	{ pat => qr"\N{HEBREW LETTER VAV WITH DAGESH}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, #
 
-	{ pat => qr"\N{HEBREW LETTER KAF}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
-	{ pat => qr"\N{HEBREW LETTER FINAL KAF}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER KAF}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER FINAL KAF}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
 
-	{ pat => qr"\N{HEBREW LETTER PE}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
-	{ pat => qr"\N{HEBREW LETTER FINAL PE}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER PE}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER FINAL PE}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
 
 	{ pat => qr"\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}",repl => "\N{BRAILLE PATTERN DOTS-146}"},
 	{ pat => qr"\N{HEBREW LETTER SHIN}\N{HEBREW POINT SIN DOT}",repl => "\N{BRAILLE PATTERN DOTS-156}"},
 
 
-	{ pat => qr"\N{HEBREW LETTER TAV}\N{HEBREW POINT DAGESH OR MAPIQ}",repl => "\N{BRAILLE PATTERN DOTS-1256}"},
+	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER TAV}",repl => "\N{BRAILLE PATTERN DOTS-1256}"},
+
+	#  at this point, dageshes are left preceeding the text.
 
 
 	# unification to regular punctuation
@@ -284,6 +345,8 @@ method heb2BrUni($string, :$highlightTaamim) {
 	
 	);
 
+
+    
     for  my $struct (@precomposed){
 	my $pat = $struct->{pat};
 	my $repl = $struct->{repl};
