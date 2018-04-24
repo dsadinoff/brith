@@ -25,11 +25,12 @@ $(PASSAGE).$(ENCODING).$(DAGESHMODE).html:
 	$(ENCODE) --add-space -u --highlight-taamim --add-word-ids $(PFILE) >> $@.tmp
 
 	(echo "<br><a href='' id=downlink>Download BRF</a><div id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a $(PFILE) | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</div></td>" ) >> $@.tmp
-	echo "<tr><td><pre>" >> $@.tmp
-	oduni -h -s  $(PFILE) >> $@.tmp
-	echo "</pre><td><pre>" >> $@.tmp
-	$(ENCODE)  -u $(PFILE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
-	echo "</pre></td></table>" >> $@.tmp
+	# echo "<tr><td><pre>" >> $@.tmp
+	# oduni -h -s  $(PFILE) >> $@.tmp
+	# echo "</pre><td><pre>" >> $@.tmp
+	# $(ENCODE)  -u $(PFILE)|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+	# echo "</pre></td>" >> $@.tmp
+	echo "</table>" >> $@.tmp
 	cat post-script.html  >> $@.tmp
 	mv $@.tmp $@
 
@@ -43,11 +44,13 @@ pangram.ashkenaz.$(ENCODING).$(DAGESHMODE).html: pangram.ashkenaz
 
 	(echo "<br><a href='' id=downlink>Download BRF</a><div id='brf-data' data-source-file-name='$@'>" && $(ENCODE) -a  $< | perl -lape';s{&}{&amp;}g;s{<}{&lt;}g;'  && echo "</div></td>" ) >> $@.tmp
 
-	echo "<tr><td><pre>" >> $@.tmp
-	oduni -h -s $< >> $@.tmp
-	echo "</pre><td><pre>" >> $@.tmp
-	$(ENCODE) -u $<|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
-	echo "</pre></td></table>" >> $@.tmp
+	# echo "<tr><td><pre>" >> $@.tmp
+	# oduni -h -s $< >> $@.tmp
+	# echo "</pre><td><pre>" >> $@.tmp
+	# $(ENCODE) -u $<|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+	# echo "</pre></td>" >> $@.tmp
+	echo "</table>" >> $@.tmp
+
 	cat post-script.html  >> $@.tmp
 	mv $@.tmp $@
 
