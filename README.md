@@ -9,18 +9,18 @@ See demos here: https://dsadinoff.github.io/hebrew-cantillation-braille/
 
 Known issues:
   * No encodings yet for
-    ** HEBREW PUNCTUATION NUN HAFUCHA
-    ** HEBREW MARK UPPER DOT
-    ** HEBREW MARK LOWER DOT
-    ** HEBREW ACCENT OLE
-    ** HEBREW ACCENT ILUY
-    ** HEBREW ACCENT DEHI
-    ** HEBREW ACCENT ZARQA = (actually a Tzinor).
+    * HEBREW PUNCTUATION NUN HAFUCHA
+    * HEBREW MARK UPPER DOT
+    * HEBREW MARK LOWER DOT
+    * HEBREW ACCENT OLE
+    * HEBREW ACCENT ILUY
+    * HEBREW ACCENT DEHI
+    * HEBREW ACCENT ZARQA = (actually a Tzinor).
   * No paraphernalia/"markup" for
-    ** Beginning of aliya
-    ** Chapter and verse indications
-    ** Parashiyot
-    ** small/large letters
+    * Beginning of aliya
+    * Chapter and verse indications
+    * Parashiyot
+    * small/large letters
 
     
     
