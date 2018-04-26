@@ -330,6 +330,7 @@ method getBasicDataMap(){
 method heb2BrUni($string, :$highlightTaamim) {
 
     $string = $self->brailleReorder($string);
+    warn 'reordered: ' . $string ."\n";
 
     # in Sring, dageshes now IMMEDIATELY preceed the letter
     
@@ -346,10 +347,6 @@ method heb2BrUni($string, :$highlightTaamim) {
 	{ pat => qr"\N{HEBREW LETTER FINAL PE WITH DAGESH}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER PE}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER FINAL PE}",repl => "\N{BRAILLE PATTERN DOTS-1234}"},
-
-	{ pat => qr"\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}",repl => "\N{BRAILLE PATTERN DOTS-146}"},
-	{ pat => qr"\N{HEBREW LETTER SHIN}\N{HEBREW POINT SIN DOT}",repl => "\N{BRAILLE PATTERN DOTS-156}"},
-
 
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER TAV}",repl => "\N{BRAILLE PATTERN DOTS-1256}"},
 
@@ -369,6 +366,13 @@ method heb2BrUni($string, :$highlightTaamim) {
 	my $repl = $struct->{repl};
 	$string =~ s{$pat}{$repl}g;
     }
+
+
+    # shin-dot and sin-dot may be separated from the letter.
+    $string  =~ s|\N{HEBREW LETTER SHIN}(\p{M}*)\N{HEBREW POINT SHIN DOT}|\N{BRAILLE PATTERN DOTS-146}$1|g;
+    $string  =~ s|\N{HEBREW LETTER SHIN}(\p{M}*)\N{HEBREW POINT SIN DOT}|\N{BRAILLE PATTERN DOTS-156}$1|g;
+
+    
     
     my %basicHebrew =  $self->getBasicDataMap();
 
