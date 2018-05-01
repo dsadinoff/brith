@@ -1,13 +1,14 @@
 #dots
 #PASSAGE=Deuteronomy.29.28
 
-PASSAGE=Exodus.10.1-11
-#PASSAGE=Exodus.10.12-23
+#PASSAGE=Exodus.10.1-11
+PASSAGE=Exodus.10.12-23
 # S2B=./sefaria2braille -e $(ENCODING)
 FETCH=./fetchSefaria
 
 PFILE = tmp/$(PFILE_BASE)
 PFILE_BASE = $(PASSAGE).utf8
+BRF_FILE = $(PASSAGE).$(ENCODING).$(DAGESHMODE).brf
 
 PANGRAM_FILE = pangram.ashkenaz.$(ENCODING).$(DAGESHMODE)
 PANGRAM_FILE_BRF =  $(PANGRAM_FILE).brf
@@ -17,7 +18,7 @@ DAGESHMODE=HEH_BCFT
 
 #OUTPUTS += out5.$(ENCODING).html
 OUTPUTS += tmp/$(PASSAGE).$(ENCODING).$(DAGESHMODE).html
-OUTPUTS += tmp/$(PASSAGE).$(ENCODING).$(DAGESHMODE).brf
+OUTPUTS += tmp/$(BRF_FILE)
 OUTPUTS += tmp/pangram.ashkenaz.$(ENCODING).$(DAGESHMODE).html
 OUTPUTS += tmp/pangram.ashkenaz.$(ENCODING).$(DAGESHMODE).brf
 OUTPUTS += tmp/summary.$(ENCODING).$(DAGESHMODE).html
@@ -26,7 +27,7 @@ $(PFILE) :
 	$(FETCH) $(PASSAGE) > $@.tmp
 	mv $@.tmp $@
 
-tmp/$(PASSAGE).$(ENCODING).$(DAGESHMODE).brf: $(PFILE)
+tmp/$(BRF_FILE): $(PFILE)
 	$(ENCODE) -a $(PFILE) > $@.tmp
 	mv $@.tmp $@
 
@@ -38,7 +39,7 @@ tmp/$(PASSAGE).$(ENCODING).$(DAGESHMODE).html: $(PFILE)
 	echo "<td >" >> $@.tmp
 	$(ENCODE) --add-space -u --highlight-taamim --add-word-ids $(PFILE) >> $@.tmp
 
-	(echo "<br><a href='$(PFILE)' >Download BRF</a></div></td>" ) >> $@.tmp
+	(echo "<br><a href='$(BRF_FILE)' >Download BRF</a></div></td>" ) >> $@.tmp
 	# echo "<tr><td><pre>" >> $@.tmp
 	# oduni -h -s  $(PFILE) >> $@.tmp
 	# echo "</pre><td><pre>" >> $@.tmp
