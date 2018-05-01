@@ -330,7 +330,7 @@ method getBasicDataMap(){
 method heb2BrUni($string, :$highlightTaamim) {
 
     $string = $self->brailleReorder($string);
-    warn 'reordered: ' . $string ."\n";
+    # warn 'reordered: ' . $string ."\n";
 
     # in Sring, dageshes now IMMEDIATELY preceed the letter
     
