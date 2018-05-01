@@ -205,7 +205,7 @@ method getTaamData(){
 		 { src=>"\N{HEBREW ACCENT SEGOL}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-234}", note=>"HEBREW POINT SEGOL  - samech"},
 		 { src=>"\N{HEBREW ACCENT SHALSHELET}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>""},
 		 { src=>"\N{HEBREW ACCENT ZAQEF QATAN}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-125}", note=>"heh"},
-		 { src=>"\N{HEBREW ACCENT ZAQEF GADOL}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1245}", note=>"gimel"},
+		 { src=>"\N{HEBREW ACCENT ZAQEF GADOL}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1256}", note=>"heh with dot6"},
 		 { src=>"\N{HEBREW ACCENT ZINOR}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>"misnamed Zarqa.  ZAYIN"}, 
 		 { src=>"\N{HEBREW ACCENT PASHTA}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-2456}", note=>"VAV"}, 
 		 { src=>"\N{HEBREW ACCENT GERESH}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-123}", note=>"AKA azla.  Lamed"},
