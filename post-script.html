@@ -5,22 +5,8 @@
 
     <script>
      "use strict";
-     function download(text, name, type) {
-	 var a = document.getElementById("downlink");
-	 var file = new Blob([text], {type: type});
-	 a.href = URL.createObjectURL(file);
-	 a.download = name;
-     }
-     function prepareBrfDownload(){
-	 
-	 var contents =  document.getElementById("brf-data").textContent;
-	 var fileNameSource =  document.getElementById("brf-data").dataset.sourceFileName;
-	 var fileName = fileNameSource.replace('.html','.brf');
-	 download(contents, fileName, 'text/plain');
-     }
 
      $(document).ready(function(){
-	 prepareBrfDownload();
 	 $('.br-word').hover(
 	     function(e){
 		 var idnum =this.id.substr(3);
