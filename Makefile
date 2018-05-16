@@ -1,8 +1,8 @@
 #dots
 #PASSAGE=Deuteronomy.29.28
 
-PASSAGE=Exodus.10.1-11
-#PASSAGE=Exodus.10.12-23
+#PASSAGE=Exodus.10.1-11
+PASSAGE=Exodus.10.12-23
 # S2B=./sefaria2braille -e $(ENCODING)
 FETCH=./fetchSefaria
 

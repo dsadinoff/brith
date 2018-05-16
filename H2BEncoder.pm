@@ -82,7 +82,6 @@ method basicData{
 	{ src=>"\N{HEBREW LETTER BET WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-12}"},
 	
 	
-	
 	{ src=>"ג"  , target=> "\N{BRAILLE PATTERN DOTS-1245}"},
 	{ src=>"ד"  , target=> "\N{BRAILLE PATTERN DOTS-145}"},
 	{ src=>"ה"  , target=> "\N{BRAILLE PATTERN DOTS-125}"},
@@ -156,6 +155,9 @@ method basicData{
 
 	{ src=>"["  , target=> "\N{BRAILLE PATTERN DOTS-6}\N{BRAILLE PATTERN DOTS-2356}"},
 	{ src=>"]"  , target=> "\N{BRAILLE PATTERN DOTS-2356}\N{BRAILLE PATTERN DOTS-3}"},
+
+	{ src=>"("  , target=> "\N{BRAILLE PATTERN DOTS-2356}"},
+	{ src=>")"  , target=> "\N{BRAILLE PATTERN DOTS-2356}"},
 
 	];
 }
