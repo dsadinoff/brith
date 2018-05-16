@@ -1,3 +1,7 @@
+v0.8
+2018-05-17 - generate whole parsha, tweak the pangram
+
+
 v0.7
 2018-05-16 - parens
 
