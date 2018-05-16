@@ -1,0 +1,19 @@
+output=$1
+PFILE=$2
+BRF_FILE=$2
+
+
+cat pre1.html  > $@.tmp
+	ENCODE -w --add-word-ids PFILE >> $@.tmp
+	echo "<td >" >> $@.tmp
+	ENCODE --add-space -u --highlight-taamim --add-word-ids PFILE >> $@.tmp
+
+	$(echo "<br><a href='BRF_FILE' >Download BRF</a></div></td>" )  >> $@.tmp
+	# echo "<tr><td><pre>" >> $@.tmp
+	# oduni -h -s  PFILE >> $@.tmp
+	# echo "</pre><td><pre>" >> $@.tmp
+	# ENCODE  -u PFILE|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
+	# echo "</pre></td>" >> $@.tmp
+	echo "</table>" >> $@.tmp
+	cat post-script.html  >> $@.tmp
+	mv $@.tmp $@

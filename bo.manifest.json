@@ -1,0 +1,41 @@
+[
+{
+ "name" : "ראשון",
+ "passage" : "Exodus.10.1-11"
+},
+{
+ "name" : "שני",
+ "passage" : "Exodus.10.12-23"
+},
+{
+ "name" : "שלישי",
+ "passage" : "Exodus.10.24-11.3"
+},
+{
+ "name" : "רביעי",
+ "passage" : "Exodus.11.4-12.20"
+},
+{
+ "name" : "חמישי",
+ "passage" : "Exodus.12.21-28"
+},
+{
+ "name" : "שישי",
+ "passage" : "Exodus.12.29-51"
+},
+{
+ "name" : "שביעי",
+ "passage" : "Exodus.13.1-13"
+},
+{
+ "name" : "מפטיר",
+ "passage" : "Exodus.13.14-16"
+},
+{
+    "literal" : "\n"
+},
+{
+ "name" : "הפתרה",
+ "passage" : "Jeremiah.46.13-28"
+}
+]
