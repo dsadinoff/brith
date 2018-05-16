@@ -1,19 +1,16 @@
+set -x
+
+#$0  output INPUT.utf8 BRF_OUTPUT_FILE
 output=$1
 PFILE=$2
-BRF_FILE=$2
+BRF_FILE=$3
+enc=${ENCODE-./encodeHebrew -e CO -m HEH_BCFT}
+cat pre1.html  > $output.tmp
+	$enc -w --add-word-ids $PFILE >> $output.tmp
+	echo "<td >" >> $output.tmp
+	$enc --add-space -u --highlight-taamim --add-word-ids $PFILE >> $output.tmp
 
-
-cat pre1.html  > $@.tmp
-	ENCODE -w --add-word-ids PFILE >> $@.tmp
-	echo "<td >" >> $@.tmp
-	ENCODE --add-space -u --highlight-taamim --add-word-ids PFILE >> $@.tmp
-
-	$(echo "<br><a href='BRF_FILE' >Download BRF</a></div></td>" )  >> $@.tmp
-	# echo "<tr><td><pre>" >> $@.tmp
-	# oduni -h -s  PFILE >> $@.tmp
-	# echo "</pre><td><pre>" >> $@.tmp
-	# ENCODE  -u PFILE|perl  -CS -lpe 's//\n/g'	 >> $@.tmp
-	# echo "</pre></td>" >> $@.tmp
-	echo "</table>" >> $@.tmp
-	cat post-script.html  >> $@.tmp
-	mv $@.tmp $@
+	echo "<br><a href='$BRF_FILE' >Download BRF</a></div></td>"  >> $output.tmp
+	echo "</table>" >> $output.tmp
+	cat post-script.html  >> $output.tmp
+	mv $output.tmp $output
