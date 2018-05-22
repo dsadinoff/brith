@@ -198,7 +198,7 @@ method getTaamData(){
 		 { src=>"\N{HEBREW ACCENT TEVIR}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1456}", note=>"TAF"},
 		 { src=>"\N{HEBREW ACCENT YETIV}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-245}", note=>"YOD"}, 
 		 { src=>"\N{HEBREW ACCENT MUNAH}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-134}", note=>"MEM"}, 
-		 { src=>"\N{HEBREW ACCENT MAHAPAKH}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-13}", note=>"Less than symbo"}, 
+		 { src=>"\N{HEBREW ACCENT MAHAPAKH}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-13}", note=>"Less than symbol, also LATIN LETTER K"}, 
 		 
 		 { src=>"\N{HEBREW POINT METEG}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-12}", note=>"taam-ACCENT But belongs on the bottom"},
 		 
