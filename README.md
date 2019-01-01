@@ -3,11 +3,14 @@ Braille Representation Of Taamei Hamikra:
 
 A project to encode cantillation marks in Hebrew Braille
 
-The ideas here are EXPERIMENTAL and not to be taken as any kind of standard.  They may change at any time.
+The ideas here are EXPERIMENTAL and not to be taken as any kind of official standard.  They may change at any time.
 
 See demos here: https://dsadinoff.github.io/broth/
 
-Known issues:
+## Authors
+The encoding is due to Danny Sadinoff and Batya Sperling-Milner
+
+## Known issues:
   * No encodings yet for
     * HEBREW PUNCTUATION NUN HAFUCHA
     * HEBREW MARK UPPER DOT
