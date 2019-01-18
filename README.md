@@ -1,11 +1,11 @@
-# BROTH
-Braille Representation Of Taamei Hamikra:
+# BRiTH
+Braille Representation involving Taamei Hamikra:
 
 A project to encode cantillation marks in Hebrew Braille
 
 The ideas here are EXPERIMENTAL and not to be taken as any kind of official standard.  They may change at any time.
 
-See demos here: https://dsadinoff.github.io/broth/
+See demos here: https://dsadinoff.github.io/brith/
 
 ## Authors
 The encoding is due to Danny Sadinoff and Batya Sperling-Milner
