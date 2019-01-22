@@ -94,5 +94,5 @@ clean:
 
 
 all:
-	$(MAKE)  clean push ENCODING=CO
+	# $(MAKE)  clean push ENCODING=CO
 	$(MAKE) clean push ENCODING=CP

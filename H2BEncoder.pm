@@ -9,7 +9,7 @@ use namespace::clean;
 
 has mode => (
     is => 'ro',
-    default => 'CO',
+    default => 'CP',
     );
 
 
@@ -49,12 +49,12 @@ method brailleReorder($line){
 		    }
 		    when('HEH_BCFT'){
 
-			if( $letter =~ m/[הבכפת]/){
+			if( $letter =~ m/[הבכפתו]/){
 			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 			}
 		    }
 		    when('HEH_BGDCFT'){
-			$letter =~ m/[הבגדכפת]/
+			$letter =~ m/[הבגדכפתו]/
 			    and 
 			    $prefix = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 		    }
@@ -75,7 +75,8 @@ method brailleReorder($line){
 
 
 method basicData{
-    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    # my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    my $dagesh = "\N{BRAILLE PATTERN DOTS-45}";
     return [
 	{ src=>"א"  , target=> "\N{BRAILLE PATTERN DOTS-1}"},
 	{ src=>"ב"  , target=> "\N{BRAILLE PATTERN DOTS-1236}"},
@@ -85,8 +86,9 @@ method basicData{
 	{ src=>"ג"  , target=> "\N{BRAILLE PATTERN DOTS-1245}"},
 	{ src=>"ד"  , target=> "\N{BRAILLE PATTERN DOTS-145}"},
 	{ src=>"ה"  , target=> "\N{BRAILLE PATTERN DOTS-125}"},
-	{ src=>"\N{HEBREW LETTER HE WITH MAPIQ}"  , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1245}\N{BRAILLE PATTERN DOTS-125}"},
+	{ src=>"\N{HEBREW LETTER HE WITH MAPIQ}"  , target=> "$dagesh\N{BRAILLE PATTERN DOTS-1245}\N{BRAILLE PATTERN DOTS-125}"},
 	
+
 { src=>"ו"  , target=> "\N{BRAILLE PATTERN DOTS-2456}"},
 
 	
@@ -164,7 +166,8 @@ method basicData{
 
 
 method getTaamData(){
-    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    #was: taamabove
+    my $dagesh = "\N{BRAILLE PATTERN DOTS-45}";
     my $taamBelow = "\N{BRAILLE PATTERN DOTS-56}";
     my $colonBraille= "\N{BRAILLE PATTERN DOTS-25}"; # can't use a colon, it's the same symbols as hataf-patach
 
@@ -184,12 +187,12 @@ method getTaamData(){
 		 
 		 # Need to encode: 32 symbols.
 		 
-		 { src=>"\N{HEBREW POINT DAGESH OR MAPIQ}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1245}", note=>"This is a standard mentioned in the WP page for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq"}, 
+		 { src=>"\N{HEBREW POINT DAGESH OR MAPIQ}" , target=> "$dagesh", note=>"This is a standard mentioned in the WP page for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq"}, 
 		 
 		 { src=>"\N{HEBREW PUNCTUATION PASEQ}" , target=> "\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}", note=>"from the english for vertical bar"},
 		 
 		 { note => "below"},
-		 { src=>"\N{HEBREW ACCENT MERKHA}"        , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-23}", note=>""},
+		 { src=>"\N{HEBREW ACCENT MERKHA}"        , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-23}", note=>"Also Yored"},
 		 { src=>"\N{HEBREW ACCENT TIPEHA}"        , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-14}", note=>""},
 		 { src=>"\N{HEBREW ACCENT MERKHA KEFULA}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1236}", note=>"Bet"}, 
 		 { src=>"\N{HEBREW ACCENT ETNAHTA}"       , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1}", note=>"Aleph"},
@@ -199,29 +202,28 @@ method getTaamData(){
 		 { src=>"\N{HEBREW ACCENT YETIV}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-245}", note=>"YOD"}, 
 		 { src=>"\N{HEBREW ACCENT MUNAH}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-134}", note=>"MEM"}, 
 		 { src=>"\N{HEBREW ACCENT MAHAPAKH}"      , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-13}", note=>"Less than symbol, also LATIN LETTER K"}, 
-		 
 		 { src=>"\N{HEBREW POINT METEG}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-12}", note=>"taam-ACCENT But belongs on the bottom"},
 		 
 		 
 		 { note => "above"},
-		 { src=>"\N{HEBREW ACCENT SEGOL}"         , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-234}", note=>"HEBREW POINT SEGOL  - samech"},
-		 { src=>"\N{HEBREW ACCENT SHALSHELET}"    , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>""},
-		 { src=>"\N{HEBREW ACCENT ZAQEF QATAN}"   , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-125}", note=>"heh"},
-		 { src=>"\N{HEBREW ACCENT ZAQEF GADOL}"   , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1256}", note=>"heh with dot6"},
-		 { src=>"\N{HEBREW ACCENT ZINOR}"         , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>"misnamed Zarqa.  ZAYIN"}, 
-		 { src=>"\N{HEBREW ACCENT PASHTA}"        , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-2456}", note=>"VAV"}, 
-		 { src=>"\N{HEBREW ACCENT GERESH}"        , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-123}", note=>"AKA azla.  Lamed"},
-		 { src=>"\N{HEBREW ACCENT GERESH MUQDAM}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-123}", note=>"Unified with GERESH"},
-		 { src=>"\N{HEBREW ACCENT GERSHAYIM}"     , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1345}", note=>"NUN"},
-		 { src=>"\N{HEBREW ACCENT REVIA}"         , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1235}", note=>"RESH"}, 
-		 { src=>"\N{HEBREW ACCENT QARNEY PARA}"   , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-1346}", note=>""},
+		 { src=>"\N{HEBREW ACCENT SEGOL}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-234}", note=>"HEBREW POINT SEGOL  - samech"},
+		 { src=>"\N{HEBREW ACCENT SHALSHELET}"    , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1356}", note=>""},
+		 { src=>"\N{HEBREW ACCENT ZAQEF QATAN}"   , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-125}", note=>"heh"},
+		 { src=>"\N{HEBREW ACCENT ZAQEF GADOL}"   , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1256}", note=>"heh with dot6"},
+		 { src=>"\N{HEBREW ACCENT ZINOR}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1356}", note=>"misnamed Zarqa.  ZAYIN"}, 
+		 { src=>"\N{HEBREW ACCENT PASHTA}"        , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-2456}", note=>"VAV"}, 
+		 { src=>"\N{HEBREW ACCENT GERESH}"        , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-123}", note=>"AKA azla.  Lamed"},
+		 { src=>"\N{HEBREW ACCENT GERESH MUQDAM}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-123}", note=>"Unified with GERESH"},
+		 { src=>"\N{HEBREW ACCENT GERSHAYIM}"     , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1345}", note=>"NUN"},
+		 { src=>"\N{HEBREW ACCENT REVIA}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1235}", note=>"RESH"}, 
+		 { src=>"\N{HEBREW ACCENT QARNEY PARA}"   , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-1346}", note=>""},
 		 
-		 { src=>"\N{HEBREW ACCENT PAZER}"         , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-124}", note=>"PE"}, 
-		 { src=>"\N{HEBREW ACCENT DARGA}"         , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-145}", note=>"DALET"}, 
-		 { src=>"\N{HEBREW ACCENT QADMA}"         , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-12345}", note=>"QOF"}, 
+		 { src=>"\N{HEBREW ACCENT PAZER}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-124}", note=>"PE"}, 
+		 { src=>"\N{HEBREW ACCENT DARGA}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-145}", note=>"DALET"}, 
+		 { src=>"\N{HEBREW ACCENT QADMA}"         , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-12345}", note=>"QOF"}, 
 		 
-		 { src=>"\N{HEBREW ACCENT TELISHA GEDOLA}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-146}", note=>"SHIN"},
-		 { src=>"\N{HEBREW ACCENT TELISHA QETANA}" , target=> "$taamAbove\N{BRAILLE PATTERN DOTS-156}", note=>"SIN"},
+		 { src=>"\N{HEBREW ACCENT TELISHA GEDOLA}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-146}", note=>"SHIN"},
+		 { src=>"\N{HEBREW ACCENT TELISHA QETANA}" , target=> "$taamBelow\N{BRAILLE PATTERN DOTS-156}", note=>"SIN"},
 		 
 
 
@@ -247,7 +249,8 @@ method getTaamData(){
 	}
 	
 	when('CO'){
-	    
+
+	    die "no longer supporting CO mode";
     # Clarity - Orthographic
     #this encoding uses an escape character .
 	    return [
@@ -256,8 +259,8 @@ method getTaamData(){
 		
 		
 
-		,{note => "This is a standard mentioned in the WP page. for the uncoded dagesh kal for ג,ד, dagesh chazak and mapiq"}
-		,{ src=>"\N{HEBREW POINT DAGESH OR MAPIQ}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1245}", note=>""} 
+		,{note => "This is a standard mentioned in the WP page. for the uncoded dagesh kal for dagesh chazak and mapiq"}
+		,{ src=>"\N{HEBREW POINT DAGESH OR MAPIQ}"   ,target=>"$dagesh", note=>""} 
 
 		,{ src=>"\N{HEBREW PUNCTUATION PASEQ}"   ,target=>"\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}", note=>"From the English for Vertical Bar"}
 		
@@ -283,24 +286,24 @@ method getTaamData(){
 		# above
 		#prefixed with "up-top" dots-3
 		,{note => "above"}
-		,{ src=>"\N{HEBREW ACCENT SEGOL}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-15}", note=>""} # cf HEBREW POINT SEGOL
-		,{ src=>"\N{HEBREW ACCENT SHALSHELET}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1356}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT ZAQEF QATAN}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-13}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT ZAQEF GADOL}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12346}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT ZINOR}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12345}", note=>""} # misnamed zarqa.  consider zayin instead?
-		,{ src=>"\N{HEBREW ACCENT PASHTA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-245}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT GERESH}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12}", note=>""} # AKA Azla
-		,{ src=>"\N{HEBREW ACCENT GERESH MUQDAM}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-12}", note=>""} # unified with geresh...
-		,{ src=>"\N{HEBREW ACCENT GERSHAYIM}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1256}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT REVIA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1235}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT QARNEY PARA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1346}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT SEGOL}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-15}", note=>""} # cf HEBREW POINT SEGOL
+		,{ src=>"\N{HEBREW ACCENT SHALSHELET}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1356}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZAQEF QATAN}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-13}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZAQEF GADOL}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-12346}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT ZINOR}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-12345}", note=>""} # misnamed zarqa.  consider zayin instead?
+		,{ src=>"\N{HEBREW ACCENT PASHTA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-245}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT GERESH}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-12}", note=>""} # AKA Azla
+		,{ src=>"\N{HEBREW ACCENT GERESH MUQDAM}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-12}", note=>""} # unified with geresh...
+		,{ src=>"\N{HEBREW ACCENT GERSHAYIM}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1256}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT REVIA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1235}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT QARNEY PARA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1346}", note=>""}
 		
-		,{ src=>"\N{HEBREW ACCENT PAZER}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1236}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT DARGA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-135}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT QADMA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-124}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT PAZER}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1236}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT DARGA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-135}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT QADMA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-124}", note=>""}
 		
-		,{ src=>"\N{HEBREW ACCENT TELISHA GEDOLA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1345}", note=>""}
-		,{ src=>"\N{HEBREW ACCENT TELISHA QETANA}"   ,target=>"$taamAbove\N{BRAILLE PATTERN DOTS-1246}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT TELISHA GEDOLA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1345}", note=>""}
+		,{ src=>"\N{HEBREW ACCENT TELISHA QETANA}"   ,target=>"$taamBelow\N{BRAILLE PATTERN DOTS-1246}", note=>""}
 		
 		
 		
@@ -316,7 +319,7 @@ method getTaamData(){
 		,{ src=>"\N{HEBREW MARK UPPER DOT}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # 
 		,{ src=>"\N{HEBREW MARK LOWER DOT}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # 
 		
-		,{ src=>"\N{HEBREW POINT QAMATS QATAN}"   ,target=>"\N{BRAILLE PATTERN DOTS-12345678}", note=>""} # unify with Qamats?
+		,{ src=>"\N{HEBREW POINT QAMATS QATAN}"   ,target=>"\N{BRAILLE PATTERN DOTS-12456}", note=>"Qamats with additional"} 
 		
 		];
 	}
@@ -341,6 +344,11 @@ method heb2BrUni($string, :$highlightTaamim) {
 
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER VAV}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, # שורוק
 	{ pat => qr"\N{HEBREW LETTER VAV WITH DAGESH}",repl => "\N{BRAILLE PATTERN DOTS-346}"}, #
+
+	# FIX fill out all of the precomposed guys
+	{ pat=>"\N{HEBREW LETTER VAV WITH HOLAM}"  , repl=> "\N{BRAILLE PATTERN DOTS-135}"},
+	{ pat=>"\N{HEBREW LETTER VAV}\N{HEBREW POINT HOLAM}"  , repl=> "\N{BRAILLE PATTERN DOTS-135}"},
+	
 
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER KAF}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
 	{ pat => qr"\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW LETTER FINAL KAF}",repl => "\N{BRAILLE PATTERN DOTS-13}"},
@@ -380,7 +388,8 @@ method heb2BrUni($string, :$highlightTaamim) {
 
     # Inspired by UEB 15.3 "Tone". Arguably the introduction ought to be two symbols instead of one in order not to conflict with UEB15.3
     # http://www.iceb.org/Rules%20of%20Unified%20English%20Braille%202013%20(linked).pdf
-    my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    # my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    my $dagesh = "\N{BRAILLE PATTERN DOTS-45}";
     my $taamBelow = "\N{BRAILLE PATTERN DOTS-56}";
     my $colonBraille= "\N{BRAILLE PATTERN DOTS-25}"; # can't use a colon, it's the same symbols as hataf-patach
 
@@ -402,7 +411,8 @@ method heb2BrUni($string, :$highlightTaamim) {
 
 	# FIX this is broken for non-CO modes.
 	my $brailleHTML = $brailleUnicode;
-	$brailleHTML =~ s{(($taamAbove|$taamBelow).)}{<span class="taam">$1</span>}g;
+	$brailleHTML =~ s{(($taamBelow).)}{<span class="taam">$1</span>}g;
+	$brailleHTML =~ s{($dagesh)}{<span class="dagesh">$1</span>}g;
 	$brailleHTML =~ s{([$periodBraille$hyphenMinusBraille])}{<span class="punct">$1</span>}g;
 	return $brailleHTML;
     }

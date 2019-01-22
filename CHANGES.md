@@ -1,3 +1,10 @@
+
+
+2019-01-19
+  new Dagesh strategy: just 45  Issue-2
+  fix initial vav issue: Holam and shuruk Issue-1
+
+
 v0.8
 2018-05-17 - generate whole parsha, tweak the pangram
 
