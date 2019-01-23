@@ -1,4 +1,4 @@
-#!/home/ccsoft/perls/cm/perl -CS
+#!/usr/bin/env perl
 
 
 #fetches  data from sefaria

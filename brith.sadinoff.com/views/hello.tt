@@ -1,0 +1,52 @@
+<div id="uploader">
+  <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+</div>
+
+<script type="text/javascript">
+// Initialize the widget when the DOM is ready ';
+
+$(function() {
+    $("#uploader").plupload({
+	// General settings
+	runtimes : 'html5,html4',
+	url : "/translate-file",
+	
+	// Maximum file size
+	max_file_size : '2mb',
+	
+	chunk_size: '1mb',
+
+	// Specify what files to browse for
+	filters : [
+
+
+	],
+	
+	// Rename files by clicking on their titles
+	rename: true,
+	
+	// Sort files
+	sortable: true,
+	
+	// Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+	dragdrop: true,
+	
+	// Views to activate
+	views: {
+	    list: true,
+	    thumbs: false, // Show thumbs
+	    active: 'list'
+	},
+	
+	// // Flash settings
+	// flash_swf_url : 'lib/plupload-3.1.2/js/Moxie.swf',
+	init:{
+	  FileUploaded: function(up,file,info){
+	  console.log(info);
+	  }	  
+	}
+	
+    });
+});
+</script>
+

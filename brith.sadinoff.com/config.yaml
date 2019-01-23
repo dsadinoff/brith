@@ -1,0 +1,9 @@
+template: "template_toolkit"
+logger: 'file'
+log: 'core'
+
+engines:
+  template:
+    template_toolkit:
+       WRAPPER: "wrapper.tt2"
+

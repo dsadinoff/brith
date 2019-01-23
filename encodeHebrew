@@ -1,4 +1,4 @@
-#!/home/ccsoft/perls/cm/perl -CSD
+#!/usr/bin/env perl
 
 
 #see
@@ -17,12 +17,14 @@ use lib qw(.);
 use H2BEncoder;
 use common::sense;
 use Unicode::Normalize qw(decompose reorder NFC NFD);
+binmode(STDOUT, ":utf8");
+binmode(STDIN, ":utf8");
 
 my $printHebrew =0;
 my $printBrailleUnicode =0;
 my $printBrailleAscii =0;
 my $highlightTaamim =0;
-my $tEncoding ='CO';
+my $tEncoding ='CP';
 my $dageshMode ='HEH_BGDCFT';
 my $debugReorder;
 my $wordIDs;
@@ -58,8 +60,10 @@ sub addWordNums{
 
 while(<>){
     chomp;
+
     emitLine($_);
 }
+
 
 exit 0;
 sub emitLine{    
