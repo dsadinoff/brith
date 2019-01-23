@@ -53,12 +53,16 @@ post '/translate-file' => sub {
     my $upload = $allUploads->{file}; # not sure what "file" means here. 
     my $uploadFile = $upload->tempname;
     my $content = read_text($uploadFile,'utf8');
+    my @keys = body_parameters->keys();
     
-    info("uploaded: ".Dumper(keys(%$allUploads))
+    info("body parameters keys = ".Dumper(\@keys));
+    info("body parameters  = ".Dumper(body_parameters));
+    info(
+	"uploaded: ".Dumper(keys(%$allUploads))
 	 ." headers = ".Dumper($upload->headers)
 	 # ." data = $content "
 	);
-
+    my $srcName = body_parameters->get('name');
     my $tEncoding ='CP';
     my $dageshMode ='HEH_BCFT';
     my $encoder = H2BEncoder->new(mode => $tEncoding, dageshMode => $dageshMode);
@@ -72,7 +76,7 @@ post '/translate-file' => sub {
     content_type "application/json";
     my $random = rand();
     my $dirname = "public/download/$random";
-    my $filename = 'output.brf';
+    my $filename = "output-$srcName.brf";
     my $publicPath = "download/$random/$filename";
     my $url = "https://brith.sadinoff.com/$publicPath";
     info("pwd is ".`/bin/pwd`);
@@ -85,22 +89,6 @@ post '/translate-file' => sub {
     close $out;
 
     return JSON::encode_json({ path => $url});
-
-    # template('uploads-test',{
-    # 	msg => get_flash(),
-    # 	translate_url => uri_for('/translate'),
-    # 	allUploads => $allUploads,
-    # 	     });
-
-    # my $handle = $upload->file_handle;
-    # my $outputFH = tempfile("translate.XXXX");
-    # while(<$handle>){
-    # 	print $outputFH "hello there!: $_";
-    # }
-
-    # $outputFH->flush();
-    # $outputFH->seek(0,SEEK_SET);
-    # send_file($outputFH, "content_type" => "text/plain" ,charset => 'utf-8');
 
 };
  
