@@ -28,6 +28,12 @@ has highlightTaamim => (
     );
 
 has addSpace => (
+    default => 1,
+    is => 'rw',
+    );
+
+
+has counter => (
     is => 'rw',
     );
 
@@ -36,7 +42,12 @@ method getEncoder(){
 return $enc;
 }
 
-
+method incCounter(){
+    $self->counter($self->counter+1);
+}
+method resetCounter(){
+    $self->counter(0);
+}
 method getBRF($inputHebrew){
     my $enc = $self->getEncoder();
     my $line = NFD($inputHebrew);
@@ -46,27 +57,30 @@ method getBRF($inputHebrew){
     return $p2;
 }
 
-method _addWordNums($line, $isBraille, $counterStart?){
-    my $counter = $counterStart||0;
-    my $splitter = ($isBraille? "\N{BRAILLE PATTERN BLANK}" : " ");
+method _addWordNums($line, $isBraille ){
+    my $splitter = ($isBraille? qr/\N{BRAILLE PATTERN BLANK}/ :  ' ');
+    my $joiner = ($isBraille? "\N{BRAILLE PATTERN BLANK}" : " ");
     my $prefix = ($isBraille? "br-" : "tr-");
     my @words = split($splitter, $line);
-    my $str =  join $splitter,  map {$counter++; qq{<span class="${prefix}word" id="${prefix}$counter">$_</span>};}  @words;
+    my $str =  join $joiner,  map {$self->incCounter(); qq{<span class="${prefix}word" id="${prefix}}.$self->counter.qq{">$_</span>};}  @words;
     return $str;
 }
 
 
 #return ($hebrewHTML, $brailleHTML) with html support for display
 method getParallelHebrewBraille($inputHebrew){
-    my $line =  NFD($inputHebrew);
-    # my @lines = split /\r?\n/, $text;
-    my $hebrewHTML = $self->_addWordNums($line,0);
+    my $text =  NFD($inputHebrew);
+    my @lines = split /\r?\n/, $text;
+    $self->counter(0);
+    my $hebrewHTML = join "\n" ,map {$self->_addWordNums($_,0)} @lines;
+    $self->counter(0);
 # say $enc->brailleReorder($line) if $debugReorder;
     my $enc = $self->getEncoder();
-    my $p1Pure = $enc->heb2BrUni($line);
-    my $p1 = $enc->heb2BrUni($line, highlightTaamim => $self->highlightTaamim);
-
+    my $p1 = join "\n", map { $enc->heb2BrUni($_, highlightTaamim => $self->highlightTaamim)} @lines;
     $p1 =~ s{\N{BRAILLE PATTERN BLANK}}{\N{BRAILLE PATTERN BLANK} }g if $self->addSpace;
+    # $p1 =~ s{\N{HEBREW PUNCTUATION SOF PASUQ}}{\N{HEBREW PUNCTUATION SOF PASUQ}\N{BRAILLE PATTERN BLANK}}g if $self->addSpace;
+    $p1 =~ s{\n}{\N{BRAILLE PATTERN BLANK}\n}g if $self->addSpace;
+    $self->counter(0);
     my $brailleHTML =   $self->_addWordNums($p1, 1);
     return ($hebrewHTML, $brailleHTML);
 }
