@@ -13,15 +13,14 @@ use Getopt::Long;
 use lib qw(.);
 use common::sense;
 
-my $highlightTaamim =0;
-my $loadJsonFile =0;
-GetOptions( "highlight-taamim|t" => \$highlightTaamim,
-	    "json|j=s" => \$loadJsonFile
+my $loadJsonManifest =0;
+GetOptions(
+	    "json|j=s" => \$loadJsonManifest
 	   );
 
-if( $loadJsonFile){
+if( $loadJsonManifest){
     local $/;
-    open( my $fh, '<', $loadJsonFile );
+    open( my $fh, '<', $loadJsonManifest );
     my $json_text   = <$fh>;
     my $specs = decode_json( $json_text );
     for my $spec (@$specs){

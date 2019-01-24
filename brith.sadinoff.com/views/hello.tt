@@ -5,6 +5,11 @@
 <h3>This is an experimental service.  use with caution.</h3>
 <p>For more information, see the <a href="https://dsadinoff.github.io/brith/">BRiTH page</a> or  contact <a href="mailto:danny@sadinoff.com">Danny Sadinoff</a>
 
+<input id="sefaria-ref" value="Exodus.10.1-10">
+<button class="fetch-passage">Get Passage Via Sefaria</button>
+<p>[<a title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+
+
 <div id="uploader">
   <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 </div>
@@ -33,6 +38,13 @@
 
 
 var currentResponse = {};
+function processServerDisplayResponse(obj){
+    currentResponse = obj
+    console.log(currentResponse);
+    $('.display').show();
+    $('.hebrew-col').html(currentResponse.hebrew);
+    $('.braille-col').html(currentResponse.braille);
+}
 $(function() {
 
     $('.download-brf').click(function(){
@@ -69,17 +81,14 @@ $(function() {
 	    thumbs: false, // Show thumbs
 	    active: 'list'
 	},
-	
+	multi_selection: false,
 	multipart_params:{
 	    fmt : 'displayMarkup'
 	},
 	init:{
 	    FileUploaded: function(up,file,info){
-		currentResponse = JSON.parse(info.response);
-	  	console.log(currentResponse);
-                $('.display').show();
-		$('.hebrew-col').html(currentResponse.hebrew);
-		$('.braille-col').html(currentResponse.braille);
+		var resp = JSON.parse(info.response);
+		processServerDisplayResponse(resp);
 	  }	  
 	}
 	
