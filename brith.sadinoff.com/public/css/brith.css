@@ -1,0 +1,15 @@
+td {vertical-align:top;}
+td.heb,.hebrew-col {direction:rtl; unicode-bidi:bidi-override;}
+.taam {background-color:lightgreen;}
+.punct {background-color:pink;}
+.tr-word,.br-word{
+    border:1px solid transparent;
+}
+.highlight{
+    background-color:yellow;
+    border: 1px solid pink;
+}
+#brf-data{
+    font-family:monospace;
+    white-space:pre-line;
+}

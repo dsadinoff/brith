@@ -27,7 +27,6 @@ my $highlightTaamim =0;
 my $tEncoding ='CP';
 my $dageshMode ='HEH_BGDCFT';
 my $debugReorder;
-my $wordIDs;
 my $addSpace;
 GetOptions(
 
@@ -42,7 +41,6 @@ GetOptions(
 
 
     "highlight-taamim|t" => \$highlightTaamim,
-    "add-word-ids|i" => \$wordIDs,
 
     
 	   );
@@ -60,7 +58,6 @@ sub addWordNums{
 
 while(<>){
     chomp;
-
     emitLine($_);
 }
 
@@ -87,6 +84,4 @@ sub emitLine{
 
     $p2 =~ s/=/ /g;		# dont actually need to code zeroes. better with spaces for now.
     say $p2 if $printBrailleAscii;
-
-    
 }

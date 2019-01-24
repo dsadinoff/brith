@@ -10,9 +10,11 @@ use IO::Handle;
 use File::Temp qw/ :seekable /;
 use common::sense;
 use v5.10;
-use H2BEncoder;
+use H2BFrontEnd;
 use Unicode::Normalize qw(decompose reorder NFC NFD);
 
+
+#fix: cleanup download directory
 
 sub set_flash {
     my $message = shift;
@@ -63,18 +65,19 @@ post '/translate-file' => sub {
 	 # ." data = $content "
 	);
     my $srcName = body_parameters->get('name');
+    my $fmt = body_parameters->get('fmt');
     my $tEncoding ='CP';
-    my $dageshMode ='HEH_BCFT';
-    my $encoder = H2BEncoder->new(mode => $tEncoding, dageshMode => $dageshMode);
-    my $p1Pure = $encoder->heb2BrUni($content);
-    info("pure = $p1Pure");
-    my $brf = $encoder->brUni2BrAscii($p1Pure);
+    my $dageshMode = body_parameters->get('dageshMode') || 'HEH_BCFT';
+    my $encoder = H2BFrontEnd->new(mode => $tEncoding, dageshMode => $dageshMode, highlightTaamim=> 1);
+    my $brf = $encoder->getBRF($content);
+
+
+    my ($hebrew, $braille) = $encoder->getParallelHebrewBraille($content);
+
     info("brf = $brf");
 
-
-
     content_type "application/json";
-    my $random = rand();
+    my $random = rand() . rand() . rand();
     my $dirname = "public/download/$random";
     my $filename = "output-$srcName.brf";
     my $publicPath = "download/$random/$filename";
@@ -88,7 +91,10 @@ post '/translate-file' => sub {
     print $out  $brf;
     close $out;
 
-    return JSON::encode_json({ path => $url});
+    return JSON::encode_json({ path => $url,
+			       hebrew => $hebrew,
+			       braille => $braille
+			     });
 
 };
  

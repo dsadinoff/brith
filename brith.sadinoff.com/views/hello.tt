@@ -1,11 +1,43 @@
+  <link type="text/css" rel="stylesheet" href="/css/brith.css">
+
+<h1> UTF8 Hebrew Text to BRF translator </h1>
+
+<h3>This is an experimental service.  use with caution.</h3>
+<p>For more information, see the <a href="https://dsadinoff.github.io/brith/">BRiTH page</a> or  contact <a href="mailto:danny@sadinoff.com">Danny Sadinoff</a>
+
 <div id="uploader">
   <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 </div>
 
+<div class='display' style="display:none;">
+  <div class="container">
+<div class="row">
+      <div class="col-md-6">
+<button class="download-brf">Download BRF</button>
+      </div>
+</div>
+    <div class="row">
+      <div dir=rtl class="col-md-6 hebrew-col">
+      </div>
+      <div class="col-md-6 braille-col">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="/js/brith.js"></script> 
 <script type="text/javascript">
 // Initialize the widget when the DOM is ready ';
 
+
+var currentResponse = {};
 $(function() {
+
+    $('.download-brf').click(function(){
+	window.location.href=currentResponse.path;
+    });
     $("#uploader").plupload({
 	// General settings
 	runtimes : 'html5,html4',
@@ -39,12 +71,15 @@ $(function() {
 	},
 	
 	multipart_params:{
+	    fmt : 'displayMarkup'
 	},
 	init:{
 	    FileUploaded: function(up,file,info){
-		var response = JSON.parse(info.response);
-	  	console.log(response);
-		window.location.href=response.path;
+		currentResponse = JSON.parse(info.response);
+	  	console.log(currentResponse);
+                $('.display').show();
+		$('.hebrew-col').html(currentResponse.hebrew);
+		$('.braille-col').html(currentResponse.braille);
 	  }	  
 	}
 	

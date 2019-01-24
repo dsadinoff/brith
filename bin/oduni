@@ -1,0 +1,45 @@
+#!/usr/bin/perl -CSD
+use charnames ();
+use strict;
+use feature 'say';
+use feature 'switch';
+use utf8;
+binmode STDOUT, ':utf8';
+
+my $sayChar = 1;
+my $sayHex = 1;
+while(@ARGV && $ARGV[0] =~ m/^-/){
+    my $opt = shift;
+    for($opt){
+        when('-s'){
+            $sayChar =0;
+        }
+        when('-h'){
+            $sayHex =0;
+        }
+        default{
+            die "unknown option $opt";
+        }
+    }
+}
+while(<>)
+{
+    for (my $i =0; $i< length($_);$i++)
+    {
+        my $char = substr($_,$i,1);
+        my $pchar = $char;
+        my $hex = sprintf('[0x%x]',ord($char));
+        if( $char =~ /\p{Z}|\p{C}/ )
+        {
+            $pchar = $hex;
+        }
+        my $name = charnames::viacode(ord($char));
+        if($sayChar){
+            print "$pchar\t";
+        }
+        if($sayHex){
+            print "$hex\t";
+        }
+        say $name;
+    }
+}

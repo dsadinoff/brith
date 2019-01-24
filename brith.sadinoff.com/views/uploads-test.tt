@@ -1,6 +1,0 @@
-here are your uploads:
-<pre>
-[%FOR f IN allUploads %]
-   [% f %]
-[% END %]
-</pre>

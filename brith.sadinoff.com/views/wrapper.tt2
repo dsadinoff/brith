@@ -1,12 +1,27 @@
 <html>
 <head>
+
+
+  <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="/lib/plupload-3.1.2/js/jquery.ui.plupload/css/jquery.ui.plupload.css">
+  <link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="/lib/plupload-3.1.2/js/moxie.js"></script>
   <script src="/lib/plupload-3.1.2/js/plupload.dev.js"></script>
   <script src="/lib/plupload-3.1.2/js/jquery.ui.plupload/jquery.ui.plupload.js"></script> 
   <script src="/lib/polyfills/string-repeat.js"></script> 
-  <link type="text/css" rel="stylesheet" href="/lib/plupload-3.1.2/js/jquery.ui.plupload/css/jquery.ui.plupload.css">
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>  -->
+  <style>
+    body{
+    text-align: inherit; //someone is doing the wrong thing 
+    }
+    </style>
+
+
 </head>
 <body>
 
