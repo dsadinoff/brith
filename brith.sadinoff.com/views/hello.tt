@@ -8,7 +8,11 @@
 <div>
     <input id="sefaria-ref" value="Exodus.10.1-10">
     <button class="fetch-passage">Get Passage Via Sefaria</button>
-    <p>[<a title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+    <p>[<a target='sefaria_syntax' title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+</div>
+
+<div>
+   To do: parameterize dagesh mode
 </div>
 <div>
   <a id="activateFileUpload" href="#" >Upload a file</a>
