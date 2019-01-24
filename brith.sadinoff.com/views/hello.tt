@@ -5,12 +5,17 @@
 <h3>This is an experimental service.  use with caution.</h3>
 <p>For more information, see the <a href="https://dsadinoff.github.io/brith/">BRiTH page</a> or  contact <a href="mailto:danny@sadinoff.com">Danny Sadinoff</a>
 
-<input id="sefaria-ref" value="Exodus.10.1-10">
-<button class="fetch-passage">Get Passage Via Sefaria</button>
-<p>[<a title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+<div>
+    <input id="sefaria-ref" value="Exodus.10.1-10">
+    <button class="fetch-passage">Get Passage Via Sefaria</button>
+    <p>[<a title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+</div>
+<div>
+  <a id="activateFileUpload" href="#" >Upload a file</a>
+</div>
 
 
-<div id="uploader">
+<div  style="display:none" id="uploader">
   <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 </div>
 
@@ -33,66 +38,4 @@
 
 
 <script src="/js/brith.js"></script> 
-<script type="text/javascript">
-// Initialize the widget when the DOM is ready ';
-
-
-var currentResponse = {};
-function processServerDisplayResponse(obj){
-    currentResponse = obj
-    console.log(currentResponse);
-    $('.display').show();
-    $('.hebrew-col').html(currentResponse.hebrew);
-    $('.braille-col').html(currentResponse.braille);
-}
-$(function() {
-
-    $('.download-brf').click(function(){
-	window.location.href=currentResponse.path;
-    });
-    $("#uploader").plupload({
-	// General settings
-	runtimes : 'html5,html4',
-	url : "/translate-file",
-	
-	// Maximum file size
-	max_file_size : '2mb',
-	
-	chunk_size: '1mb',
-
-	// Specify what files to browse for
-	filters : [
-
-
-	],
-	
-	// Rename files by clicking on their titles
-	rename: true,
-	
-	// Sort files
-	sortable: true,
-	
-	// Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
-	dragdrop: true,
-	
-	// Views to activate
-	views: {
-	    list: true,
-	    thumbs: false, // Show thumbs
-	    active: 'list'
-	},
-	multi_selection: false,
-	multipart_params:{
-	    fmt : 'displayMarkup'
-	},
-	init:{
-	    FileUploaded: function(up,file,info){
-		var resp = JSON.parse(info.response);
-		processServerDisplayResponse(resp);
-	  }	  
-	}
-	
-    });
-});
-</script>
 
