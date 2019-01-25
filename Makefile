@@ -86,7 +86,8 @@ tmp/summary.$(ENCODING).$(DAGESHMODE).html: tester.pl
 
 push: $(OUTPUTS)
 	cp $(OUTPUTS) docs
-	cp $(OUTPUTS) ~dsadinoff/www/tmp
+	-cp $(OUTPUTS) ~dsadinoff/www/tmp
+	-cp $(OUTPUTS) brith.sadinoff.com/public/test
 
 
 clean:

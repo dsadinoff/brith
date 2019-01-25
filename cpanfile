@@ -8,3 +8,5 @@ requires 'Template::Toolkit';
 requires 'File::Slurper';
 requires 'DBD::SQLite';
 requires 'JSON';
+requires 'XML::LibXML';
+requires 'LWP::Protocol::https';

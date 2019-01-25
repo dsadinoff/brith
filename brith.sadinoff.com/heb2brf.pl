@@ -57,6 +57,7 @@ get '/translate' => sub {
 #get back *three* results:  hebrew <=>  braille html and BRF in a file
 func encodeAndReturn($content, $srcName?){
     my $srcName = $srcName || body_parameters->get('name');
+    $srcName =~ s/[^-0-9a-zA-Zא-ת_. ]/_/g;
     # my $fmt = body_parameters->get('fmt');
     my $tEncoding ='CP';
     my $dageshMode = body_parameters->get('dageshMode') || 'HEH_BCFT';
@@ -99,7 +100,9 @@ post '/translate-sefaria' => sub{
 
     if( $postObj->{manifest}){
 	my $source = $sefaria->fetchViaManifest($postObj->{manifest});
-	return encodeAndReturn($source, "unknown");
+	my $filename = $postObj->{manifest}[0]{passage} || 'unknown';
+	info("filename = $filename");
+	return encodeAndReturn($source, $filename);
     }
     else{
 	my $spec = "Exodus:1.5-10";

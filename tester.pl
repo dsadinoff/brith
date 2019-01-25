@@ -1,6 +1,6 @@
-#!/home/ccsoft/perls/cm/perl -CS
+#!/usr/bin/perl -CS
 
-
+#generates a summary of the encoding.
 #see
 #https://en.wikipedia.org/wiki/Braille_ASCII
 
@@ -53,8 +53,9 @@ td.braille span {  background:white; }
 EOF
 
     my $basic = $enc->basicData;
+    my $basicTests = $enc->additionalBasicTests;
     
-    for my $struct (@$basic, @{$enc->getTaamData()}){
+    for my $struct (@$basic, @$basicTests, @{$enc->getTaamData()}){
 	my $char = $struct->{src};
 	my $note = $struct->{note};
 	if( !$char){
@@ -62,7 +63,7 @@ EOF
 	    next;
 	}
 
-	my $name = charnames::viacode(ord($char));
+	my $name = oduni($char);
 
 	my $text = "\N{HEBREW LETTER BET}$char";
 	my $uni  = $enc->heb2BrUni($text,highlightTaamim => 1);
@@ -71,3 +72,30 @@ EOF
 say "</table>";
 
 exit 0;
+
+#returns ($name, $hex) 
+# or just $name in a scalar context
+sub oduni{
+    my $str = shift;
+    my (@names, @hexes);
+    for (my $i =0; $i< length($str);$i++)
+    {
+        my $char = substr($str,$i,1);
+        my $pchar = $char;
+        my $hex = sprintf('[0x%x]',ord($char));
+        if( $char =~ /\p{Z}|\p{C}/ )
+        {
+            $pchar = $hex;
+        }
+        my $name = charnames::viacode(ord($char));
+	push @hexes, $hex;
+	push @names, $name;
+    }
+    my $name = join ",",@names;
+    my $hexes = join ",",@hexes;
+    if( wantarray){
+	return ($name, $hexes);
+    }
+    return $name;
+    
+}

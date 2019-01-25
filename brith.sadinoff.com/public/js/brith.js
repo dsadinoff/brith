@@ -48,6 +48,7 @@ $(document).ready(function(){
     }
     function setupFetchSefaria(){
 	function fetchUserSuppliedSpec(){
+	    clearOutput();
 	    var passageName = "ספריה";
 	    var ref = $('#sefaria-ref').val();
 	    $.ajax({

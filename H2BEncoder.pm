@@ -22,8 +22,15 @@ has dageshMode => (
     );
 
 
+method brUni2Visual($input){
+    
+}
+
 method brUni2BrAscii($input){
+
     $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}{A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
+    # $input =~ tr{⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟⠠⠡⠢⠣ ⠤⠥⠦⠧⠨⠩⠪⠫⠬⠭⠮⠯⠰⠱⠲ ⠳⠴⠵⠶⠷⠸⠹⠺⠻⠼⠽⠾⠿⠀}
+    #             {A1B'K2L@CIF/MSP"E3H9O6R^DJG>NTQ,*5<\-U8V.%[$+X!&;:4\\0Z7(_?W]#Y)=};
     return $input;
 }
 
@@ -74,6 +81,26 @@ method brailleReorder($line){
 }
 
 
+method additionalBasicTests{
+    # my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
+    my $dagesh = "\N{BRAILLE PATTERN DOTS-45}";
+    return [
+	{ src=>"ו"  , target=> "\N{BRAILLE PATTERN DOTS-2456}"},
+
+	# normalized shuruk
+	{ src=>"\N{HEBREW LETTER VAV}\N{HEBREW POINT DAGESH OR MAPIQ}"  , target=> "\N{BRAILLE PATTERN DOTS-346}"},
+	# precomposed
+	{ src=>"\N{HEBREW LETTER VAV WITH DAGESH}"  , target=> "\N{BRAILLE PATTERN DOTS-346}"},
+
+
+	# normalized holam
+	{ src=>"\N{HEBREW LETTER VAV}\N{HEBREW POINT HOLAM}"  , target=> "\N{BRAILLE PATTERN DOTS-135}"},
+	# precomposed holam
+	{ src=>"\N{HEBREW LETTER VAV WITH HOLAM}"  , target=> "\N{BRAILLE PATTERN DOTS-135}"},
+	];
+}
+
+
 method basicData{
     # my $taamAbove = "\N{BRAILLE PATTERN DOTS-45}";
     my $dagesh = "\N{BRAILLE PATTERN DOTS-45}";
@@ -90,7 +117,6 @@ method basicData{
 	
 
 { src=>"ו"  , target=> "\N{BRAILLE PATTERN DOTS-2456}"},
-
 	
 { src=>"ז"  , target=> "\N{BRAILLE PATTERN DOTS-1356}"},
 { src=>"ח"  , target=> "\N{BRAILLE PATTERN DOTS-1346}"},

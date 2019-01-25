@@ -77,7 +77,12 @@ method _fetch($spec){
 	    push @lines, @{$srcAref}[$firstIndex..$lastIndex];
 	}
 	else{
-	    push @lines, @{$srcAref->[0]}
+	    if( 'ARRAY' eq ref $srcAref->[0] ){
+		push @lines, @{$srcAref->[0]}
+	    }
+	    else{
+		push @lines, @$srcAref;
+	    }
 	}
     }
 

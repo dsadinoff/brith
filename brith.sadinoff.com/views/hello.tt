@@ -41,5 +41,5 @@
 
 
 
-<script src="/js/brith.js"></script> 
+<script src="/js/brith.js?a=5"></script> 
 
