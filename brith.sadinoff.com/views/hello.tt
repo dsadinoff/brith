@@ -4,11 +4,22 @@
 
 <h3>This is an experimental service.  use with caution.</h3>
 <p>For more information, see the <a href="https://dsadinoff.github.io/brith/">BRiTH page</a> or  contact <a href="mailto:danny@sadinoff.com">Danny Sadinoff</a>
+<div class='container'>
+  <div class="row">
+    <div class="col-md-6">
+      <input id="sefaria-ref" value="Exodus.10.1-10">
+      <button class="fetch-passage">Get Passage Via Sefaria</button>
+      <p>[<a target='sefaria_syntax' title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+    </div>
 
-<div>
-    <input id="sefaria-ref" value="Exodus.10.1-10">
-    <button class="fetch-passage">Get Passage Via Sefaria</button>
-    <p>[<a target='sefaria_syntax' title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
+
+    <div class="col-md-6">
+      <select id='manifest-selector'>
+      </select>
+      <br>
+      <button class="fetch-manifest">Get Parsha</button>
+    </div>
+  </div>
 </div>
 
 <div>
@@ -41,5 +52,5 @@
 
 
 
+<script src="/data/parshiot.js"></script>
 <script src="/js/brith.js?a=5"></script> 
-

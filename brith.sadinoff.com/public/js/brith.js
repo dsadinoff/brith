@@ -47,21 +47,15 @@ $(document).ready(function(){
 	
     }
     function setupFetchSefaria(){
-	function fetchUserSuppliedSpec(){
+
+	function fetchManifest(manifest){
 	    clearOutput();
-	    var passageName = "ספריה";
-	    var ref = $('#sefaria-ref').val();
 	    $.ajax({
 		url:'/translate-sefaria',
 		method: 'post',
 		contentType:'application/json',
 		data: JSON.stringify({
-		    manifest :[
-			{
-			    "name": passageName,
-			    "passage": ref
-			},
-		    ]
+		    manifest : manifest
 		}),
 		success:function(data,status, jxhr){
 		    console.log(data,status);
@@ -70,7 +64,32 @@ $(document).ready(function(){
 		}
 	    }
 		  );
+	    
 	}
+	
+	function fetchUserSuppliedSpec(){
+	    var passageName = "ספריה";
+	    var ref = $('#sefaria-ref').val();
+	    var manifest  = [
+			{
+			    "name": passageName,
+			    "passage": ref
+			},
+	    ];
+	    fetchManifest(manifest);	
+	}
+	
+	function loadParshiot(){
+	    var $select = $('select#manifest-selector');
+	    $.each(parshiot, function(i ,elem){
+		var $option = $('<option></option>');
+		$option.text(elem.name + " - " + elem.hebrew );
+		$option.val(i);
+		$select.append($option);
+		console.log(elem.hebrew);
+	    });
+	}
+	
 
 	$('.fetch-passage').click(fetchUserSuppliedSpec);
 
@@ -81,6 +100,14 @@ $(document).ready(function(){
 		$(this).trigger("enterKey");
 	    }
 	});
+
+	loadParshiot();
+	$('.fetch-manifest').click(function(){
+	    var parshaIndex = $('select#manifest-selector').val();
+	    var parsha = parshiot[parshaIndex];
+	    fetchManifest(parsha.manifest);
+	});
+	
 	
     }
 

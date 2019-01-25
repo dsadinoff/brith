@@ -4,6 +4,7 @@ use utf8;
 use common::sense;
 use Moo;
 use Method::Signatures;
+use charnames ();
 
 use namespace::clean;
 
@@ -22,8 +23,16 @@ has dageshMode => (
     );
 
 
-method brUni2Visual($input){
-    
+func accessible($uni){
+    my $char = shift;
+    my $name = charnames::viacode(ord($char));
+    $name=~ s/BRAILLE PATTERN //;
+    return "$name ";
+}
+
+method brUni2Accessible($input){
+    $input =~ s/(\p{Braille})/accessible($1)/ge;
+    return $input;
 }
 
 method brUni2BrAscii($input){

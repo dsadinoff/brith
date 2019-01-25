@@ -1,0 +1,94 @@
+#!/usr/bin/env perl
+use common::sense;
+use Data::Dump qw(dump);
+use utf8;
+use common::sense;
+use JSON qw();
+
+use Method::Signatures;
+use LWP::UserAgent;
+# use Unicode::Debug;
+#$Unicode::Debug::Names = 1;
+use namespace::clean;
+use XML::LibXML;
+use File::Temp qw/tempfile  :seekable/;
+    
+
+
+my $source = 'https://raw.githubusercontent.com/hebcal/dotcom/master/hebcal.com/dist/aliyah.xml';
+my $ua = LWP::UserAgent->new();
+my $res = $ua->get($source);
+die unless $res->is_success;
+my $xmlBytes = $res->content;
+my $substr = substr($xmlBytes,1410,5);
+
+my $parser = XML::LibXML->new();
+my $doc = $parser->load_xml(string=>$xmlBytes);
+my @parshiot = ();
+for my $parshaNode ($doc->findnodes('//parsha')){
+    my $parsha = {
+	map { ($_ => $parshaNode->getAttribute($_))} qw(id hebrew combined verse) 
+	    
+    };
+    # warn unidebug($parsha->{hebrew}), "\n";
+    
+    push @parshiot, $parsha;
+    for my $aliyahNode ($parshaNode->findnodes('fullkriyah/aliyah')){
+	push @{$parsha->{aliyot}},{ 
+	    map { ($_ => $aliyahNode->getAttribute($_))} qw(num begin end numverses) 
+	};
+    }
+}
+#say JSON::to_json(\@parshiot, {utf8=>0,pretty=>1});
+
+sub num2name{
+    my ($rec, $num)  = @_;
+    my $map = {
+	2 => "שני",
+	3 => "שלישי",
+	4 => "רביעי",
+	5 => "חמישי",
+	6 => "שישי",
+	7 => "שביעי",
+	M => "מפטיר",
+	
+    };
+    for ( $num){
+	when(1){
+	    return $rec->{hebrew};
+	}
+	default{
+	    return $map->{$num};
+	}
+    }
+    
+}
+
+my @manifests = ();
+for my $parsha (@parshiot){
+    my $rec = {
+	name => $parsha->{id},
+	hebrew => $parsha->{hebrew},
+    };
+    next if $parsha->{combined};
+    push @manifests,$rec;
+    my @manifest = ();
+    my $book = $parsha->{verse};
+    $book=~ s/ .*//;
+    for my $aliyah (@{$parsha->{aliyot}}){
+	my $name = num2name( $rec, $aliyah->{num});
+	my $beg = $aliyah->{begin};
+	my $end = $aliyah->{end};
+	$beg =~ s/:/./g;
+	$end =~ s/:/./g;
+	my $ref = "$book.$beg-$end";
+	push @manifest, {name=> $name,
+			 passage => $ref,
+	} ;
+    }
+    $rec->{manifest} = \@manifest;
+}
+say JSON::encode_json(\@manifests);
+
+
+

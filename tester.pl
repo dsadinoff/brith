@@ -18,7 +18,7 @@ use common::sense;
 
 use charnames ();
 
-my $tEncoding ='CO';
+my $tEncoding ='CP';
 my $dageshMode ='HEH_BGDCFT';
 GetOptions(
 	   "taammim-encoding|e=s" => \$tEncoding,
@@ -67,7 +67,8 @@ EOF
 
 	my $text = "\N{HEBREW LETTER BET}$char";
 	my $uni  = $enc->heb2BrUni($text,highlightTaamim => 1);
-	say "<tr><td>$name<td>$text<td class='braille'>$uni</td><td>$note</td></tr>";
+	my $accessible = $enc->brUni2Accessible($uni);
+	say "<tr><td>$name<td>$text<td class='braille'>$uni</td><td class='acc'>$accessible</td><td>$note</td></tr>";
 }
 say "</table>";
 

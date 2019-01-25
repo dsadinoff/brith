@@ -10,3 +10,7 @@ requires 'DBD::SQLite';
 requires 'JSON';
 requires 'XML::LibXML';
 requires 'LWP::Protocol::https';
+
+
+#debug
+requires 'Unicode::Debug';
