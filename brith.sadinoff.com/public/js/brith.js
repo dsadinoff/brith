@@ -4,11 +4,14 @@ var currentResponse = {};
 
 // Initialize the widget when the DOM is ready ';
 
-
+function stopSpinner(){
+    $('.spinner-container').hide();
+}
 
 function processServerDisplayResponse(obj){
     currentResponse = obj
     console.log(currentResponse);
+    stopSpinner();
     $('.display').show();
     $('.hebrew-col').html(currentResponse.hebrew);
     $('.braille-col').html(currentResponse.braille);
@@ -20,24 +23,46 @@ $(document).ready(function(){
 	$('.hebrew-col').empty();
 	$('.braille-col').empty();
 	$('.display').hide();
+	$('.spinner-container').show();
     }
+    function highlightAndScroll(homeSide, highlightNotScroll){
+	var thatPrefix;
+	var thatClass;
+	if( homeSide == 'braille'){
+	    thatPrefix = 'tr-';
+	    thatClass = '.hebrew-col';
+	}
+	else{
+	    thatPrefix = 'br-';
+	    thatClass = '.braille-col';
+	    
+	}
+	return function(e){
+	    var idnum =this.id.substr(3);
+	    var theID = thatPrefix+idnum;
+	    var thatDiv = $(thatClass)
+	    if( highlightNotScroll){
+		$('#'+theID).addClass('highlight');
+		$(this).addClass('highlight');
+	    }
+	    else{
+		// scroll
+		$('#'+theID)[0].scrollIntoView();
+	    }
+	}
+    }
+    
     function setupMouseOverEvents(){
 	$('.braille-col').on('mouseenter','.br-word',
-			     function(e){
-				 var idnum =this.id.substr(3);
-				 var theID = "tr-"+idnum;
-				 $('#'+theID).addClass('highlight');
-				 $(this).addClass('highlight');
-			     });
-	
-	
+			     highlightAndScroll('braille', true));
+	$('.braille-col').on('click','.br-word',
+			     highlightAndScroll('braille', false));
+
 	$('.hebrew-col').on('mouseenter','.tr-word',
-			    function(e){
-				var idnum =this.id.substr(3);
-				var theID = "br-"+idnum;
-				$('#'+theID).addClass('highlight');
-				$(this).addClass('highlight');
-			    });
+			    highlightAndScroll('hebrew', true));
+	$('.hebrew-col').on('click','.tr-word',
+			    highlightAndScroll('hebrew', false));
+
 	
 	$('.hebrew-col,.braille-col').on('mouseleave','.br-word,.tr-word',
 					 function(e){

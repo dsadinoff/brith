@@ -33,7 +33,14 @@ method fetchViaManifest($manifest){
 	}
 	else{
 	    push @lines, "[" .  $spec->{name}  . "]";
-	    push @lines,$self->_fetch($spec->{passage});
+	    if( $spec->{passages}){
+		for my $passage (@{$spec->{passages}}){
+		    push @lines,$self->_fetch($passage);
+		}
+	    }
+	    else{
+		push @lines,$self->_fetch($spec->{passage});
+	    }
 	}
     }
     return join "\n",@lines;

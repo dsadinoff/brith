@@ -29,6 +29,13 @@ $(PFILE) :
 	$(FETCH) $(PASSAGE_URL_PARAM) > $@.tmp
 	mv $@.tmp $@
 
+parshiot: brith.sadinoff.com/public/data/parshiot.js
+brith.sadinoff.com/public/data/parshiot.js:
+	echo 'var parshiot = ' > $@.tmp
+	bin/grabparshiot >> $@.tmp
+	mv $@.tmp $@
+
+
 tmp/$(BRF_FILE): $(PFILE)
 	$(ENCODE) -a $(PFILE) > $@.tmp
 	mv $@.tmp $@

@@ -1,5 +1,13 @@
 td {vertical-align:top;}
-td.heb,.hebrew-col {direction:rtl; unicode-bidi:bidi-override;}
+td.heb,.hebrew-col {
+    direction:rtl;
+    unicode-bidi:bidi-override;
+}
+.hebrew-col, .braille-col{
+    height:70vh;
+    overflow:auto;
+	   
+}
 .taam {background-color:lightgreen;}
 .punct {background-color:pink;}
 .tr-word,.br-word{

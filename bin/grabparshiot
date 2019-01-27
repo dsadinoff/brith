@@ -1,4 +1,8 @@
 #!/usr/bin/env perl
+
+#parse the hebcal parshiot.xml and emit a set of manifests per parsha.
+
+
 use common::sense;
 use Data::Dump qw(dump);
 use utf8;
@@ -27,7 +31,7 @@ my $doc = $parser->load_xml(string=>$xmlBytes);
 my @parshiot = ();
 for my $parshaNode ($doc->findnodes('//parsha')){
     my $parsha = {
-	map { ($_ => $parshaNode->getAttribute($_))} qw(id hebrew combined verse) 
+	map { ($_ => $parshaNode->getAttribute($_))} qw(id hebrew combined verse haftara sephardic) 
 	    
     };
     # warn unidebug($parsha->{hebrew}), "\n";
@@ -86,6 +90,31 @@ for my $parsha (@parshiot){
 			 passage => $ref,
 	} ;
     }
+
+    my %haftaraName = (haftara =>'הפטרה - אשקנז',
+		    sephardic => 'הפטרה - ספרדי');
+
+    for my $srcKey  ( qw(haftara sephardic)){
+	my $name = $haftaraName{$srcKey};
+	my $spec = $parsha->{$srcKey} or next;
+	my ($book, $locations) = $spec =~ m/^([^0-9]+) ([0-9:; -]+)$/;
+	$book =~ s/ /_/g;
+	if( !$locations){
+	    die "bad spec: $spec,  parsha = ".dump($parsha);
+	}
+	my @refs; 
+	for my $location(  split /; ?/,$locations){
+	    my ($beg,  $end) = $location =~ m/([^ -]+)(?: - (.+))?/;
+	    die "bad location $location" unless $beg;
+	    $end ||= $beg;
+	    push @refs, "$book.$beg-$end";
+	}
+	push @manifest,{name => $name, passages => \@refs};
+	
+	
+    }
+
+    
     $rec->{manifest} = \@manifest;
 }
 say JSON::encode_json(\@manifests);
