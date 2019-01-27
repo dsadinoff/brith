@@ -66,7 +66,7 @@ func encodeAndReturn($content,$dageshMode, $srcName?){
 
     my ($hebrew, $braille) = $encoder->getParallelHebrewBraille($content);
 
-    info("brf = $brf");
+    info("dageshmode = $dageshMode, brf = $brf");
 
     content_type "application/json";
     my $random = rand() . rand() . rand();

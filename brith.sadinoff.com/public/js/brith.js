@@ -180,16 +180,21 @@ $(document).ready(function(){
 		active: 'list'
 	    },
 	    multi_selection: false,
-	    multipart_params:{
-		fmt : 'displayMarkup'
-	    },
 	    init:{
 		FileUploaded: function(up,file,info){
 		    var resp = JSON.parse(info.response);
 		    processServerDisplayResponse(resp);
-		}	  
+		},
+
+		BeforeUpload:  function(uploader, file){
+		    console.log("beforeUpload");
+		    uploader.setOption({'multipart_params':
+					{
+					    fmt : 'displayMarkup',
+					    dageshMode: $('#dageshSelect').val()
+					}});
+		}
 	    }
-	    
 	});
     }
     
