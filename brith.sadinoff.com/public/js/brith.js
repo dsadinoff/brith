@@ -80,7 +80,8 @@ $(document).ready(function(){
 		method: 'post',
 		contentType:'application/json',
 		data: JSON.stringify({
-		    manifest : manifest
+		    manifest : manifest,
+		    dageshMode: $('#dageshSelect').val()
 		}),
 		success:function(data,status, jxhr){
 		    console.log(data,status);

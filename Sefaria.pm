@@ -50,7 +50,7 @@ method fetchViaManifest($manifest){
 method _fetch($spec){
     #https://www.sefaria.org.il/api/texts/Exodus.10.1-11?commentary=0&context=1&pad=0&wrapLinks=1
     my $url = "https://www.sefaria.org.il/api/texts/${spec}?commentary=0&context=1&pad=0&wrapLinks=1";
-    warn ("url is : $url");
+    # warn ("url is : $url");
     my $ua = LWP::UserAgent->new();
     # eyeroll
     $ua->agent('Sefaria fetcher for BRiTH project');

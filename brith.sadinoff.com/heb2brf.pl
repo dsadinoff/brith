@@ -55,12 +55,11 @@ get '/translate' => sub {
  
 #pass in utf8 hebrew
 #get back *three* results:  hebrew <=>  braille html and BRF in a file
-func encodeAndReturn($content, $srcName?){
+func encodeAndReturn($content,$dageshMode, $srcName?){
     my $srcName = $srcName || body_parameters->get('name');
     $srcName =~ s/[^-0-9a-zA-Zא-ת_. ]/_/g;
     # my $fmt = body_parameters->get('fmt');
     my $tEncoding ='CP';
-    my $dageshMode = body_parameters->get('dageshMode') || 'HEH_BCFT';
     my $encoder = H2BFrontEnd->new(mode => $tEncoding, dageshMode => $dageshMode, highlightTaamim=> 1);
     my $brf = $encoder->getBRF($content);
 
@@ -94,20 +93,21 @@ func encodeAndReturn($content, $srcName?){
 
 post '/translate-sefaria' => sub{
     my $postObj = from_json( request->body );
-    info(Dumper($postObj));
+    info('postObj is '.Dumper($postObj));
     my $sefaria = Sefaria->new();
 
 
+    my $dageshMode = $postObj->{dageshMode} ||'HEH_BCFT';
     if( $postObj->{manifest}){
 	my $source = $sefaria->fetchViaManifest($postObj->{manifest});
 	my $filename = $postObj->{manifest}[0]{passage} || 'unknown';
- 	info("filename = $filename");
-	return encodeAndReturn($source, $filename);
+ 	info("filename = $filename, dageshMode = $dageshMode");
+	return encodeAndReturn($source, $dageshMode, $filename);
     }
     else{
 	my $spec = "Exodus:1.5-10";
 	my $source = $sefaria->fetch($spec);
-	return encodeAndReturn($source, $spec);
+	return encodeAndReturn($source, $dageshMode, $spec);
     }
 };
 
@@ -126,8 +126,9 @@ post '/translate-file' => sub {
     # 	 ." headers = ".Dumper($upload->headers)
     # 	 # ." data = $content "
     # 	);
+    my $dageshMode = body_parameters->get('dageshMode') || 'HEH_BCFT';
 
-    return encodeAndReturn($content);
+    return encodeAndReturn($content, $dageshMode);
 };
  
 dance;

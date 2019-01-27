@@ -1,4 +1,5 @@
 export PERL5LIB=../local/lib/perl5/
+logfile=logs/plackup.out
 #../local/bin/plackup -r -E production -s Starman --workers=2 -l /var/run/brith-dancer.sock -a heb2brf.pl & 
 
-../local/bin/plackup -r -E production -s Starman --workers=2 -l :7080 -a heb2brf.pl & 
+../local/bin/plackup -r -E production -s Starman --workers=2 -l :7080 -a heb2brf.pl > $logfile 2>&1 &
