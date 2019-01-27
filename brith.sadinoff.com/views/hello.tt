@@ -4,7 +4,17 @@
 
 <h3>This is an experimental service.  use with caution.</h3>
 <p>For more information, see the <a href="https://dsadinoff.github.io/brith/">BRiTH page</a> or  contact <a href="mailto:danny@sadinoff.com">Danny Sadinoff</a>
-<div class='container'>
+  <div class='container'>
+    <div class="row">
+      <div>
+	<label for=dageshSelect>Dagesh Density</label>
+	<select id='dageshSelect'>
+	  <option value=ALL>All</option>
+	  <option value=HEH_BCFT selected>HEH_BCFT: הבכפ״ת</option>
+	  <option value=HEH_BGDCFT>HEH_BGDCFT : הבגדכפ״ת</option>
+	</select>
+      </div>
+    </div>
   <div class="row">
     <div class="col-md-6">
       <input id="sefaria-ref" value="Exodus.10.1-10">
@@ -22,14 +32,6 @@
   </div>
 </div>
 
-<div>
-  <label for=dageshSelect>Dagesh Density</label>
-  <select id='dageshSelect'>
-    <option value=ALL>All</option>
-    <option value=HEH_BCFT selected>HEH_BCFT: הבכפ״ת</option>
-    <option value=HEH_BGDCFT>HEH_BGDCFT : הבגדכפ״ת</option>
-  </select>
-</div>
 <div>
   <a id="activateFileUpload" href="#" >Upload a file</a>
 </div>
