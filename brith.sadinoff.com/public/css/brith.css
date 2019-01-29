@@ -10,6 +10,7 @@ td.heb,.hebrew-col {
 .hebrew-col, .braille-col{
     height:70vh;
     overflow:auto;
+    white-space:pre;
 	   
 }
 .taam {background-color:lightgreen;}
