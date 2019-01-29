@@ -1,4 +1,5 @@
-
+2019-01-29
+  Fixed Mapiq He  to accord iwth new Dagesh
 
 2019-01-19
   new Dagesh strategy: just 45  Issue-2
