@@ -122,7 +122,8 @@ method basicData{
 	{ src=>"ג"  , target=> "\N{BRAILLE PATTERN DOTS-1245}"},
 	{ src=>"ד"  , target=> "\N{BRAILLE PATTERN DOTS-145}"},
 	{ src=>"ה"  , target=> "\N{BRAILLE PATTERN DOTS-125}"},
-	{ src=>"\N{HEBREW LETTER HE WITH MAPIQ}"  , target=> "$dagesh\N{BRAILLE PATTERN DOTS-1245}\N{BRAILLE PATTERN DOTS-125}"},
+	# FIX has special?
+	{ src=>"\N{HEBREW LETTER HE WITH MAPIQ}"  , target=> "$dagesh\N{BRAILLE PATTERN DOTS-125}"},
 	
 
 { src=>"ו"  , target=> "\N{BRAILLE PATTERN DOTS-2456}"},

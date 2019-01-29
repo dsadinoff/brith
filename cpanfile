@@ -10,6 +10,7 @@ requires 'DBD::SQLite';
 requires 'JSON';
 requires 'XML::LibXML';
 requires 'LWP::Protocol::https';
+requires 'Convert::Braille';
 
 
 #debug
