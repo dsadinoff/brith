@@ -38,10 +38,14 @@ get '/hello/:name' => sub {
 
 get '/' => sub {
 
-    redirect('/translate');
+    redirect('/transcode');
+};
+get '/translate' => sub {
+
+    redirect('/transcode');
 };
  
-get '/translate' => sub {
+get '/transcode' => sub {
 
     state $counter =1;
   
