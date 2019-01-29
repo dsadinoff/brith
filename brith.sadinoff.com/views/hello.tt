@@ -1,8 +1,10 @@
   <link type="text/css" rel="stylesheet" href="/css/brith.css">
 
-<h1> UTF8 Hebrew Text to BRF translator </h1>
+<div class="intro">  <h1>BRiTH Transcoder</h1>
+  <h2> Encodes  Hebrew Text or Sefaria to BRF</h2>
 
-<h3>This is an experimental service.  use with caution.</h3>
+<h3 >This is an experimental service.  use with caution.</h3>
+</div>
 <p>For more information, see the <a href="https://dsadinoff.github.io/brith/">BRiTH page</a> or  contact <a href="mailto:danny@sadinoff.com">Danny Sadinoff</a>
   <div class='container'>
     <div class="row">

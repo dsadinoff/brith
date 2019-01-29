@@ -1,3 +1,7 @@
+
+.intro h1,.intro h2, .intro h3{
+    text-align:center;
+}
 td {vertical-align:top;}
 td.heb,.hebrew-col {
     direction:rtl;
