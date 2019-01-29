@@ -59,7 +59,7 @@ EOF
 	my $char = $struct->{src};
 	my $note = $struct->{note};
 	if( !$char){
-	    say qq(<tr><td colspan=2"><hr> $note);
+	    say qq(<tr><td colspan=2><hr> $note);
 	    next;
 	}
 
