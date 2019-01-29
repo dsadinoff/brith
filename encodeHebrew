@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 
 #see
@@ -8,17 +8,18 @@
 
 
 use v5.12;
+use common::sense;
 use utf8;
+use open qw(:std :utf8);
+use Unicode::Normalize qw(decompose reorder NFC NFD);
 use JSON;
 use LWP::Simple;
 use Data::Dumper;
 use Getopt::Long;
+
 use lib qw(.);
 use H2BEncoder;
-use common::sense;
-use Unicode::Normalize qw(decompose reorder NFC NFD);
-binmode(STDOUT, ":utf8");
-binmode(STDIN, ":utf8");
+
 
 my $printHebrew =0;
 my $printBrailleUnicode =0;
