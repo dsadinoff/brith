@@ -1,5 +1,7 @@
-# BRiTH
-Braille Representation involving Taamei Hamikra:
+# BRITH
+Braille Representation Incorporating Taamei Hamikra:
+   or 
+Braille Representation Including Trop with Hebrew:
 
 A project to encode cantillation marks in Hebrew Braille
 
