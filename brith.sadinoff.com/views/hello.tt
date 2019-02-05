@@ -28,7 +28,7 @@
     </div>
   <div class="row">
     <div class="col-md-6">
-      <input id="sefaria-ref" value="Exodus.10.1-10">
+      <input id="sefaria-ref" value="Jeremiah.31.1-40">
       <button class="fetch-passage">Get Passage Via Sefaria</button>
       <p>[<a target='sefaria_syntax' title="Sefaria's text-reference syntax" href="https://github.com/Sefaria/Sefaria-Project/wiki/Text-References">Sefaria's Reference syntax</a> ]
     </div>
