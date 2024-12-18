@@ -194,8 +194,14 @@ method basicData{
 	{ src=>"["  , target=> "\N{BRAILLE PATTERN DOTS-6}\N{BRAILLE PATTERN DOTS-2356}"},
 	{ src=>"]"  , target=> "\N{BRAILLE PATTERN DOTS-2356}\N{BRAILLE PATTERN DOTS-3}"},
 
+	{ src=>"{"  , target=> "\N{BRAILLE PATTERN DOTS-6}\N{BRAILLE PATTERN DOTS-2356}"},
+	{ src=>"}"  , target=> "\N{BRAILLE PATTERN DOTS-2356}\N{BRAILLE PATTERN DOTS-3}"},
+
 	{ src=>"("  , target=> "\N{BRAILLE PATTERN DOTS-2356}"},
 	{ src=>")"  , target=> "\N{BRAILLE PATTERN DOTS-2356}"},
+
+	{ src=>"|"  , target=> "\N{BRAILLE PATTERN DOTS-456}\N{BRAILLE PATTERN DOTS-1256}"},
+
 
 	];
 }
@@ -274,7 +280,7 @@ method getTaamData(){
 		 { src=>"\N{HEBREW ACCENT ZARQA}" , target=> "\N{BRAILLE PATTERN DOTS-12345678}", note=>"Actually a tzinor"},
 		 
 		 { note => "not yet coded"},
-		 { src=>"\N{HEBREW PUNCTUATION NUN HAFUKHA}" , target=> "\N{BRAILLE PATTERN DOTS-12345678}", note=>""},
+		 { src=>"\N{HEBREW PUNCTUATION NUN HAFUKHA}" , target=> "\N{BRAILLE PATTERN DOTS-12345678}", note=>"Inverted Nun??"},
 		 
 		 { src=>"\N{HEBREW MARK UPPER DOT}" , target=> "\N{BRAILLE PATTERN DOTS-12345678}", note=>""}, # 
 		 { src=>"\N{HEBREW MARK LOWER DOT}" , target=> "\N{BRAILLE PATTERN DOTS-12345678}", note=>""}, # 

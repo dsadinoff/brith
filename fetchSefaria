@@ -12,12 +12,14 @@ use Data::Dumper;
 use Getopt::Long;
 use lib qw(.);
 use common::sense;
+use Sefaria;
 
 my $loadJsonManifest =0;
 GetOptions(
 	    "json|j=s" => \$loadJsonManifest
 	   );
 
+my $sefaria = new Sefaria();
 if( $loadJsonManifest){
     local $/;
     open( my $fh, '<', $loadJsonManifest );
@@ -29,14 +31,14 @@ if( $loadJsonManifest){
 	}
 	else{
 	    say "[" .  $spec->{name}  . "]";
-	    say join ("\n",fetch($spec->{passage}));
+	    say join ("\n",$sefaria->fetch($spec->{passage}));
 	}
     }
     
 }
 else{
     my $spec = $ARGV[0] || 'Exodus.10.1-11' ;
-    my @lines = fetch($spec);
+    my @lines = $sefaria->fetch($spec);
     say join ("\n", @lines);
 }
 exit;

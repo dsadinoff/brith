@@ -14,14 +14,14 @@
       <p><a href="https://dsadinoff.github.io/brith/pangram.ashkenaz.CP.HEH_BCFT.html">Pangram</a> |  <a href="https://dsadinoff.github.io/brith/summary.CP.HEH_BCFT.html">Encoding summary</a>
     </div>
   </div>
-  
-  
+
+
   <div class="row">
       <div>
 	<label for=dageshSelect>Dagesh Density</label>
 	<select id='dageshSelect'>
-	  <option value=ALL>All</option>
-	  <option value=HEH_BCFT selected>HEH_BCFT: הבכפ״ת</option>
+	  <option selected value=ALL>All</option>
+	  <option value=HEH_BCFT >HEH_BCFT: הבכפ״ת</option>
 	  <option value=HEH_BGDCFT>HEH_BGDCFT : הבגדכפ״ת</option>
 	</select>
       </div>

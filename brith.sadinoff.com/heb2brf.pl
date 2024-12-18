@@ -27,7 +27,7 @@ sub set_flash {
 sub get_flash {
     my $msg = session('flash');
     session->delete('flash');
- 
+
     return $msg;
 }
  
@@ -104,6 +104,7 @@ post '/translate-sefaria' => sub{
     my $dageshMode = $postObj->{dageshMode} ||'HEH_BCFT';
     if( $postObj->{manifest}){
 	my $source = $sefaria->fetchViaManifest($postObj->{manifest});
+
 	my $filename = $postObj->{manifest}[0]{passage} || 'unknown';
  	info("filename = $filename, dageshMode = $dageshMode");
 	return encodeAndReturn($source, $dageshMode, $filename);

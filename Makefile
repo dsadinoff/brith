@@ -104,3 +104,8 @@ clean:
 all:
 	# $(MAKE)  clean push ENCODING=CO
 	$(MAKE) clean push ENCODING=CP
+
+
+
+installdeps:
+	PERL5LIB=local/lib/perl5 cpanm -l local  --installdeps .
