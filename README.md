@@ -1,5 +1,7 @@
-# BRiTH
-Braille Representation involving Taamei Hamikra:
+# BRITH
+Braille Representation Incorporating Taamei Hamikra:
+   or 
+Braille Representation Including Trope with Hebrew:
 
 A project to encode cantillation marks in Hebrew Braille
 
@@ -24,6 +26,10 @@ The encoding is due to Danny Sadinoff and Batya Sperling-Milner
     * Chapter and verse indications
     * Parashiyot
     * small/large letters
-
+     
+ ## Prior Art
+After development of BRITH,  I was made aware of Duxbury Systems' work on https://www.duxburysystems.com/biblical_scholar.htm "Original Language Studies", which incorporates a group of holy texts.  This work wan an NFB Award in 2016.
+https://archive.nfb.org/images/nfb/publications/bm/bm16/bm1611/bm161111.htm
     
+
     
